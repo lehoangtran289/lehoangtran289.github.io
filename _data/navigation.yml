@@ -20,7 +20,7 @@ main:
   # - title: "Portfolio"
   #   url: /portfolio/
 
-  - title: "About me"
+  - title: "About Me"
     url: /about/
 
   - title: "Curriculum Vitae"
