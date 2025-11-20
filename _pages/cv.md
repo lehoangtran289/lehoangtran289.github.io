@@ -38,7 +38,7 @@ redirect_from:
 
 *Hanoi, Vietnam \| July 2025 – August 2025*
 
-- Implemented a fault-tolerant online data migration solution for **10TB+** data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
+- Researched a fault-tolerant online data migration solution for **10TB+** data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
 - Leveraged **AI-driven tools** to automate unit/integration tests and preliminary code review, improving developer productivity for code implementation by **25%**.
 
 ### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
