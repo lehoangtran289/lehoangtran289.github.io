@@ -310,6 +310,7 @@ plugins:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jemoji
+  - jekyll-toc
 
 # Mimic GitHub Pages with --safe
 whitelist:
@@ -319,6 +320,7 @@ whitelist:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jemoji
+  - jekyll-toc
 
 
 # Archives
