@@ -17,7 +17,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 ## Some definitions
 
-![thread_process](../images/blogs/javaconcurrency/thread_process.jpg)
+![thread_process]({{ site.baseurl }}/images/blogs/javaconcurrency/thread_process.jpg)
 
 - A thread is the **smallest unit of execution** that can be scheduled by the operating system.
 - A process = group of threads that execute in the same, shared environment.
@@ -54,7 +54,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 ## ExecutorService life cycle
 
-![life cycle](../images/blogs/javaconcurrency/executorservice_lifecycle.png)
+![life cycle]({{ site.baseurl }}/images/blogs/javaconcurrency/executorservice_lifecycle.png)
 
 - Note:
   - `shutdown()` not actually stop any tasks having already been submitted
@@ -108,7 +108,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 - Any thread trying to access the variable while an atomic operation is in process **will have to wait** until the atomic operation on the variable is complete.
 - `Atomic operation = read + write`
 
-![atomic operations](../images/blogs/javaconcurrency/atomic_ops.png)
+![atomic operations]({{ site.baseurl }}/images/blogs/javaconcurrency/atomic_ops.png)
 
 ## Synchronize blocks
 
@@ -175,7 +175,7 @@ This article provides understanding of Java Concurrency concepts, including thre
     - remove from list by setting data to null, rebuild list to skip null. Unreachable cells are GCed
   - Entire map isn't locked -> changes may not be visible immediately (there is no single lock that pushes all changes to all threads waiting)
 
-![c_hashmap](../images/blogs/javaconcurrency/c_hashmap.png)
+![c_hashmap]({{ site.baseurl }}/images/blogs/javaconcurrency/c_hashmap.png)
 
 ## Collections.synchronizedMap()
 
