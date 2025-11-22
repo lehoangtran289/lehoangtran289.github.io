@@ -13,9 +13,9 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 {% include toc %}
 
-# 1. Introducing threads
+## 1. Introducing threads
 
-## Some definitions
+### Some definitions
 
 ![thread_process]({{ site.baseurl }}/images/blogs/javaconcurrency/thread_process.jpg)
 
@@ -27,18 +27,18 @@ This article provides understanding of Java Concurrency concepts, including thre
 - A **user-defined thread** is one created by the application to accomplish a specific task.
 - A **daemon thread** are designed for tasks that run in the background and don't prevent the JVM from exiting. ex: GC thread
 
-## Thread concurrency
+### Thread concurrency
 
 - Operating systems use a **thread scheduler** to determine which threads should be currently executing. ex: round-robin scheduler
   - If there are 10 available threads, they might each get 100 milliseconds in which to execute.
   - When a thread’s allotted time is complete but the thread has not finished processing, a context switch occurs
   - Thread can have priority
 
-# 2. ExecutorService
+## 2. ExecutorService
 
 - Obtain `ExecutorService` instance and send tasks to be processed
 
-## Single-thread executor:
+**Single-thread executor:**
 
 - Results are guaranteed to be executed in the order in which they are added to the executor service
 
@@ -52,7 +52,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 	}
 ```
 
-## ExecutorService life cycle
+### ExecutorService life cycle
 
 ![life cycle]({{ site.baseurl }}/images/blogs/javaconcurrency/executorservice_lifecycle.png)
 
@@ -60,7 +60,7 @@ This article provides understanding of Java Concurrency concepts, including thre
   - `shutdown()` not actually stop any tasks having already been submitted
   - `shutdownNow()` **attempts** to stop all running tasks -> return `List<Runnable>` of tasks were not started by the executor
 
-## ExecutorService methods
+### ExecutorService methods
 
 ```java
 	void execute(Runnable command)
@@ -72,7 +72,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 - **invokeAll()** method will wait indefinitely until all tasks are complete, while the **invokeAny()** method will wait indefinitely until at least one task completes.
 
-### Waiting for all tasks to finish
+**Waiting for all tasks to finish**
 
 - First shut down the thread executor using the `shutdown()` method.
 - Then `awaitTermination()` to waits the specified time to complete all tasks
@@ -98,11 +98,11 @@ This article provides understanding of Java Concurrency concepts, including thre
 	}
 ```
 
-# 3. Synchronize Data access
+## 3. Synchronize Data access
 
 - Synchronization is about `protecting data consistency` at the cost of performance
 
-## Atomic Classes
+### Atomic Classes
 
 - Perform the read and write of the variable as a single operation, not allowing any other threads to access the variable during the operation.
 - Any thread trying to access the variable while an atomic operation is in process **will have to wait** until the atomic operation on the variable is complete.
@@ -110,7 +110,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 ![atomic operations]({{ site.baseurl }}/images/blogs/javaconcurrency/atomic_ops.png)
 
-## Synchronize blocks
+### Synchronize blocks
 
 - A monitor is a structure that **supports mutual exclusion** or the property that at most one thread is executing a particular segment of code at a given time.
 - In Java, any `Object` can be used as a monitor, along with the `synchronized` keyword
@@ -157,9 +157,9 @@ This article provides understanding of Java Concurrency concepts, including thre
 	}
 ```
 
-# 4. Concurrent collections
+## 4. Concurrent collections
 
-## ConcurrentHashMap
+### ConcurrentHashMap
 
 - It uses a **group of locks** (16 in all), each guarding a subset of the hash table (segment lock)
 - Its methods allow read/write operations with minimal locking
@@ -177,12 +177,12 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 ![c_hashmap]({{ site.baseurl }}/images/blogs/javaconcurrency/c_hashmap.png)
 
-## Collections.synchronizedMap()
+### Collections.synchronizedMap()
 
 - a SynchronizedMap only uses a **single lock** -> slower
 - Not scalable as ConcurrentHashMap
 
-## Java Blocking Queue
+### Java Blocking Queue
 
 - Adding to full queue / Get from empty queue can block client (with timeout)
 
@@ -191,32 +191,32 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 - Internally, many BlockingQueue implementations use `ReentrantLock` & `ConditionObjects`
 
-# 5. Threading problems
+## 5. Threading problems
 
-## Liveness
+### Liveness
 
-- Liveness problems, then, are those in which the application becomes unresponsive or in some kind of “stuck” state
+- Liveness problems, then, are those in which the application becomes unresponsive or in some kind of "stuck" state
 
-### Deadlock
+**Deadlock**
 
 - Deadlock occurs when two or more threads are blocked forever, each waiting on the other.
 - **Example**: Imagine that our zoo has two foxes: Foxy and Tails
   - Foxy likes to eat first and then drink water, while Tails likes to drink water first and then eat. Furthermore, neither animal likes to share, and they will finish their meal only if they have exclusive access to both food and water\
   - Foxy obtains the food and then moves to the other side of the environment to obtain the water. Unfortunately, Tails already drank the water and is waiting for the food to become available -> **DEADLOCK**
 
-### Starvation
+**Starvation**
 
 - Starvation occurs when a single thread is perpetually denied access to a shared resource or lock.
 - The thread is still active, but it is unable to complete its work as a result of other threads constantly taking the resource that they trying to access.
 
-### Livelock
+**Livelock**
 
 - A livelock is similar to a deadlock, except that the states of the processes involved in the livelock constantly change with regard to one another, none progressing
 - ex: Imagine that Foxy and Tails are both holding their food and water resources, respectively.
   - They each realize that they cannot finish their meal in this state, so they both let go of their food and water, run to opposite side of the environment, and assetsk up the other resource. Now Foxy has the water, Tails has the food, and neither is able to finish their meal!
   - Foxy and Tails are executing a form of failed deadlock recovery. Unfortunately, the lock and unlock process is cyclical, and the two foxes are conceptually deadlocked -> **LIVELOCK**
 
-# 6. Lock framework
+## 6. Lock framework
 
 - The `Lock` framework works in a similar manner to the synchronized code
 - Instead of being able to synchronize on any Object , we can only synchronize on an object that implements the Lock interface
@@ -239,7 +239,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 	}
 ```
 
-## tryLock(long time, TimeUnit unit)
+### tryLock(long time, TimeUnit unit)
 
 - The `tryLock()` method will attempt to acquire a lock and immediately return a boolean result indicating whether or not the lock was obtained.
 - Unlike the `lock()` method, it does not wait if another thread already holds the lock
@@ -258,14 +258,14 @@ This article provides understanding of Java Concurrency concepts, including thre
 	}
 ```
 
-## ReentrantLock()
+### ReentrantLock()
 
 - A simple monitor lock behaves most like the locks created by the **synchronized** keyword
 - One advantage to using the `Lock` framework is that we can use `tryLock()` to avoid deadlocking
 
 - `unlock()` method must be called the same number of times as the `lock()` method in order to release the lock
 
-## Fair Lock Management
+### Fair Lock Management
 
 - By default, when a `ReentrantLock` releases a lock, it then assigns it to a waiting thread at random if there are any, in the same manner as synchronized.
   -> Could lead to thread starvation
@@ -276,7 +276,7 @@ This article provides understanding of Java Concurrency concepts, including thre
 
 - When the `boolean` value is set to `true` , fairness is enabled and the longest waiting thread is guaranteed to obtain the lock the next time it is released
 
-## Read/Write Locks
+### Read/Write Locks
 
 - Read/Write locks are a type of lock that allows concurrent read access to an object but **requires WRITE exclusive access**.
 - Lock `readLock()` -> If there is no thread having write lock, then multiple threads can acquire read lock ~ multiple threads can read the data concurrently.
@@ -309,12 +309,12 @@ public class ReadWriteLockExample {
 }
 ```
 
-## ReentrantReadWriteLock
+### ReentrantReadWriteLock
 
 - Java classic R/W lock
 - Like the `ReentrantLock` class, it also accepts an optional fairness boolean parameter in its constructor
 
-## StampedLock
+### StampedLock
 
 - Java 8++ implementation of R/W lock
 - Provides 3 locking modes
@@ -333,14 +333,14 @@ public class ReadWriteLockExample {
 
 ---
 
-# 7. Condition interface
+## 7. Condition interface
 
 - A `Lock` replaces the use of synchronized methods and statements, a `Condition` replaces the use of the Object monitor methods.
 - Conditions (also known as condition queues or condition variables) provide a means for one thread to suspend execution (to "wait") until notified by another thread that some state condition may now be true
 - A Condition instance is bound to a lock using `lock.newCondition()` method.
 - Use cases: java blocking collections
 
-## Condition.await()
+### Condition.await()
 
 -> Causes the current thread to wait until it is signalled or interrupted.
 
@@ -349,7 +349,7 @@ public class ReadWriteLockExample {
   - Some other thread invokes the `signalAll()` method for this Condition
   - Some other thread interrupts the current thread
 
-## Condition.signal()
+### Condition.signal()
 
 - Wakes up one waiting thread.
 - One thread is chosen for waking up, this thread must re-acquire the lock before returning from `await()`
@@ -400,7 +400,7 @@ public class SimpleBlockingQueue<T> {
 }
 ```
 
-# 8. Semaphore
+## 8. Semaphore
 
 - A semaphore is conceptually an “object” that can be atomically incremented & decremented to **control access to a shared resource**
 - It records a `count` (“permits”) of how many units of a resource are available
@@ -408,20 +408,20 @@ public class SimpleBlockingQueue<T> {
 - Threads can wait (timed or blocking) until a unit of the resource is available
 - When a thread is done with a resource the permit count is incremented atomically & another waiting thread can acquire it
 
-## Semaphore types
+### Semaphore types
 
-### 1. Counting semaphore
+**1. Counting semaphore**
 
 - Have # of permits defined by a counter (N)
   - **Negative**: exactly -N threads queued waiting to acquire semaphore
   - **Zero** = No waiting threads: an acquire operation will block the invoking thread until N is positive
   - **Positive** = No waiting threads: an acquire will not block the invoking thread
 
-### 2. Binary semaphore
+**2. Binary semaphore**
 
 - Have only 2 states: acquired (0) & not acquired (1) ==> N = 0 || N = 1
 
-## Java Semaphore
+### Java Semaphore
 
 - A semaphore maintains a set of permits.
 - Each `acquire()` blocks if necessary until a permit is available, and then takes it.
@@ -429,13 +429,13 @@ public class SimpleBlockingQueue<T> {
 - A thread that acquires a semaphore need not be the one that releases it
 - Note: Semaphore not provide any guarantees about the synchronization (order) in which threads will access the shared resource, it only control the number of threads that can access code at the same time.
 
-### Methods
+**Methods**
 
 - `acquire()` atomically obtains a permit from the semaphore, can be interrupted
 - `tryAcquire()` obtains a permit if it’s available at invocation time
 - `release()` atomically increments the permit count by 1 -> a thread waiting to acquire the semaphore can then proceed
 
-## Binary Semaphore vs Reentrant Lock (mutex)
+### Binary Semaphore vs Reentrant Lock (mutex)
 
 - Mechanism
   - Binary semaphore = signaling mechanism
@@ -447,7 +447,7 @@ public class SimpleBlockingQueue<T> {
   - Binary semaphores are non-reentrant by nature -> same thread can’t re-acquire a critical section, else it will lead to a deadlock situation.
   - A reentrant lock allows reentering a lock by the same thread multiple times.
 
-# 9. Java Volatile Variables
+## 9. Java Volatile Variables
 
 - Ensure a variable is read from & written to main memory & not cached
   - e.x: sharing a field between two threads
@@ -460,7 +460,7 @@ public class SimpleBlockingQueue<T> {
 - volatile write is visible to “happens-after” reads
 - Note: incrementing `i++` is not atomic
 
-## Piggybacking / volatile variable rule
+### Piggybacking / volatile variable rule
 
 - Anything prior to writing `true` to `boolean v` is visible to anything after reading `boolean v`.
 - => the `x` variable piggybacks on the memory visibility enforced by `boolean v`. Simply put, even though it’s not a volatile variable, it’s exhibiting a volatile behaviour.
@@ -483,7 +483,7 @@ public class SimpleBlockingQueue<T> {
 	}
 ```
 
-# 10. Java "Happens-Before" Relationships
+## 10. Java "Happens-Before" Relationships
 
 - In single thread, each action "happens-before" every action in that thread that occurs later in the program order
 - In multi-thread, actions in different threads can occur in different orders -> can cause problems without proper synchronization
@@ -499,9 +499,9 @@ public class SimpleBlockingQueue<T> {
   - **Thread terminate rule** : Tất cả hành động của thead happens-before trước hành động thread.join(). Nghĩa là tất cả dữ liệu được threadB thay đổi sẽ được threadA nhìn thấy khi hàm threadB.join() trả lại.
   - **Transitivity rule** : A happens before B & B happens before C => A happens before C
 
-# 11. Java Barrier Synchronization
+## 11. Java Barrier Synchronization
 
-## Introduction
+### Introduction
 
 - A barrier is a synchronizer that ensures thread(s) **must stop at a certain point** & cannot proceed until all other thread(s) reach this barrier
 - Compare with other types of Java synchronizers
@@ -509,7 +509,7 @@ public class SimpleBlockingQueue<T> {
   - **Mutual exclusion synchronizers**: allow concurrent access & updates to shared mutable data within critical sections (e.g: Lock)
   - **Coordination synchronizers**: ensure that computations run properly order, time, conditions, ... (e.g: ConditionObject)
 
-## 3 types of Barrier:
+**3 types of Barrier:**
 
 - **Entry barrier**: keep concurrent computations from running untils object(s) are fully init
   - e.g: Main thread spawns # of worker threads & then performs some timeconsuming initialization of data structures. After init workers can perform tasks.
@@ -522,14 +522,14 @@ public class SimpleBlockingQueue<T> {
 - **Cyclic barrier**: a group of threads all wait for each other to reach a certain point before advancing to the next cycle
   - e.g 2: Tour guide waits for all the tourists to finish exploring a room before continuing the tour in next room
 
-## CountDownLatch
+### CountDownLatch
 
 - Allows one or more threads to wait on the completion of operations in other threads
 - Supports 2: entry & exit barriers, but not cyclic barriers
 - Well-suited for fixed-size, one-shot “entry” & “exit” barriers
 - Simple APIs: `await()` and `countDown()` -> releases any threads blocked on `await()` when count reaches 0
 
-## CyclicBarrier
+### CyclicBarrier
 
 - The `CyclicBarrier` allows a group of threads to all wait for each other to reach a common barrier point. It is called cyclic because it can be re-used after the waiting threads are released.
 - Supports 3: entry, exit, & cyclic barriers for a **fixed** # of threads
@@ -572,7 +572,7 @@ public class CyclicBarrierExample {
 }
 ```
 
-## Phaser
+### Phaser
 
 - A more flexible, reusable, & dynamic barrier synchronizer that combines CyclicBarrier & CountDownLatch
 - Allows a variable (or fixed) # of threads to wait for all operations performed in other threads to complete before proceeding
@@ -592,7 +592,7 @@ public class CyclicBarrierExample {
   - `Phaser` supports multiple phases of computation. Once all threads have arrived at the `Phaser`, it advances to the next phase. This is useful in iterative algorithms where each iteration is a separate phase.
   - Flexiable arrival: A thread can wait for all parties to arrive or can just register its arrival using `arrive()` and continue without waiting for others.
 
-# References
+## References
 
 - <https://www.dre.vanderbilt.edu/~schmidt/cs891s/2019-PDFs/>
 - <https://docs.google.com/presentation/d/1wE986IU7dTriFPlubmYiDrXcZOPF01iF9qmwVOohTvo/edit#slide=id.g2ab1348b6de_0_72>
