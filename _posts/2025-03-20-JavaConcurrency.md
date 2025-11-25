@@ -1,8 +1,8 @@
 ---
 title: "Java Concurrency 101"
 layout: single
-date: 2024-09-20
-permalink: /posts/2024/09/java-concurrency-101/
+date: 2025-03-20
+permalink: /posts/java-concurrency-101/
 tags:
   - Java
   - Concurrency
