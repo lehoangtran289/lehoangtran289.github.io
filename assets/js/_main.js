@@ -92,7 +92,7 @@ $(document).ready(function () {
 
   // If the user hasn't chosen a theme, follow the OS preference
   setTheme();
-  window.matchMedia('(prefers-color-scheme: dark)')
+  window.matchMedia('(prefers-color-scheme: light)')
         .addEventListener("change", (e) => {
           if (!localStorage.getItem("theme")) {
             setTheme(e.matches ? "dark" : "light");
