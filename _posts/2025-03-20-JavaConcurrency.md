@@ -594,6 +594,6 @@ public class CyclicBarrierExample {
 
 ## References
 
-- <https://www.dre.vanderbilt.edu/~schmidt/cs891s/2019-PDFs/>
-- <https://docs.google.com/presentation/d/1wE986IU7dTriFPlubmYiDrXcZOPF01iF9qmwVOohTvo/edit#slide=id.g2ab1348b6de_0_72>
-- Rate limiter: <https://rockset.com/blog/improving-concurrency-redis-rate-limiting-system/>
+- [Java Concurrency Collections](https://www.dre.vanderbilt.edu/~schmidt/cs891s/2019-PDFs/)
+- [Concurrency in practice (vnese)](https://docs.google.com/presentation/d/1wE986IU7dTriFPlubmYiDrXcZOPF01iF9qmwVOohTvo/edit#slide=id.g2ab1348b6de_0_72)
+- [Rate limiter design](https://rockset.com/blog/improving-concurrency-redis-rate-limiting-system/)
