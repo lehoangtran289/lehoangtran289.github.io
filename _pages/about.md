@@ -13,7 +13,7 @@ redirect_from:
 
 Hi there!
 
-I’m Hoang, an aspiring backend software engineer who is currently pursuing M.S. in Computer Science at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent over 4 years working as a backend software engineer at a reputable Vietnamese fintech company, delivering large-scale software systems and automated business workflows that serve millions of users.
+I’m Hoang, an aspiring backend software engineer who is currently pursuing M.S. in Computer Science at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent over 4 years working at a reputable Vietnamese fintech company, delivering large-scale software systems and automated business workflows that serve millions of users.
 
 My interests include database technologies, distributed systems, scalable software design, and I enjoy understanding how software systems really work internally to improve engineering mindset.
 
