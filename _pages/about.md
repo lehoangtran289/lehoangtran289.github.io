@@ -17,7 +17,7 @@ I’m Hoang, an aspiring backend software engineer who is currently pursuing M.S
 
 My interests include database technologies, distributed systems, scalable software design, and I enjoy understanding how software systems really work internally to improve engineering mindset.
 
-I like to read about software system architecture, best practices, and general engineering topics. I also try to document the concepts and techniques I learn along the way, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
+I like to read about software system architecture, best practices, tech trends and general engineering topics. I also try to document the concepts and techniques I learn along the way, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
 
 I'm always open to connecting and discussing about tech or related areas. Feel free to reach out through my social links or email.
 
