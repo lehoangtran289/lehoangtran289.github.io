@@ -19,11 +19,11 @@ My interests include database technologies, distributed systems, scalable softwa
 
 I like to read about software system architecture, best practices, tech trends and general engineering topics. I also try to document the concepts and techniques I learn along the way, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
 
-I'm always open to connecting and discussing about tech or related areas. Feel free to reach out through my social links or email.
+I'm always open to connecting and discussing about tech or related areas. Outside of work and study, you can usually find me watching sports like tennis or table tennis as well. Feel free to reach out through my social links or email.
 
 ## Journey
 
 - **2025 – Present:** M.S. in Computer Science @ [George Mason University](https://cec.gmu.edu/) - Fairfax, VA, USA
-- **2025:** SWE (Backend) @ [LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Hanoi, Vietnam
-- **2021 – 2025:** SWE (Backend) @ [Viettel Digital](https://viettel.com.vn/en/) - Hanoi, Vietnam
+- **2025:** Backend SWE @ [LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Hanoi, Vietnam
+- **2021 – 2025:** Backend SWE @ [Viettel Digital](https://viettel.com.vn/en/) - Hanoi, Vietnam
 - **2017 - 2022:** B.S. in Information Technology (ICT) @ [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) - Hanoi, Vietnam 
