@@ -13,13 +13,11 @@ redirect_from:
 
 Hi there!
 
-I’m Hoang, an aspiring backend software engineer who is currently pursuing M.S. in Computer Science at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent over 4 years working at a reputable Vietnamese fintech company, delivering large-scale software systems and automated business workflows that serve millions of users.
+I’m Hoang, a backend software engineer who is currently pursuing M.S. in Computer Science at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent over 4 years working at a reputable Vietnamese fintech company, delivering large-scale software systems and automated business workflows that serve millions of users.
 
-My interests include database technologies, distributed systems, scalable software design, and I enjoy understanding how software systems really work internally to improve engineering mindset.
+My interests include database technologies, distributed systems, scalable software design, and I enjoy understanding how software systems really work internally to develop a more pragmatic engineering mindset. That's why I'm into reading about these areas, along with best practices and current tech trends as well. Along this journey, I also try to document and elaborate on the concepts/techniques I learn, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
 
-I like to read about software system architecture, best practices, tech trends and general engineering topics. I also try to document the concepts and techniques I learn along the way, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
-
-I'm always open to connecting and discussing about tech or related areas. Outside of work and study, you can usually find me watching sports like tennis or table tennis as well. Feel free to reach out through my social links or email.
+ Beyond work, I'm a big fan of sports like tennis or table tennis too. Anyway, feel free to reach out or drop a message through my social links or email. I'm always open to connecting and discussing.
 
 ## Journey
 
