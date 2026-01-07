@@ -26,7 +26,8 @@ redirect_from:
 
 ## Education
 
-- M.S. in Computer Science, [George Mason University](https://cec.gmu.edu/) \| Fairfax, VA, USA \| 2027 (expected)
+- M.S. in Computer Science, [George Mason University](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Dec 2026 (expected)
+  - Current GPA: 4.0/4.0
 - B.S. in Information Technology, [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| 2022
   - Excellence Degree (Top 5%) (5 years program)
 
