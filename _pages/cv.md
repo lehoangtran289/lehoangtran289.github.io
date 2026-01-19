@@ -13,7 +13,7 @@ redirect_from:
 
 ---
 
-[Download my CV (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
+[Download my CV (PDF)]({{ base_path }}/files/CV_LeHoangTran.pdf)
 
 ---
 
@@ -47,35 +47,35 @@ redirect_from:
 *Hanoi, Vietnam \| May 2021 – June 2025*  
 
 - **Customer Engagement Platform**
-  - Implemented an in-house **marketing system** that engages customers through personalized campaigns such as in-app/push notifications, gift/voucher distribution, delivering over **100M+** events to Viettel Money users daily.
-  - Optimized segmentation creation throughput from **500** to **35,000** qps by applying **Roaring Bitmap** with effective caching strategies, which dramatically reduced service latency by **80%**.
-  - Implemented a **rule evaluation** workflow using Camunda BPM, making it configurable for non-technical users.
+  - Designed and implemented an in-house customer engagement platform delivering **100M+ events/day**, supporting personalized campaigns via push notifications, in-app messaging, and voucher distribution.
+  - Increased segmentation creation throughput from **500 to 35,000 QPS** by introducing **Roaring Bitmap-based indexing and caching** layers, reducing **p95 latency by 80%**.
+  - Implemented **business workflow automation** using Camunda, enabling non-technical users to configure workflows and reducing engineering intervention.
   - Led a team of 4 backend engineers; driving sprint planning, system design, and code reviews to continuously extend system functionalities, in reaction to meeting user needs and growing demands for performance and scalability.
-  - Monitored system metrics via **Grafana** and proactively detect potential areas for performance improvement. Reported to relevant teams, applied multiple **optimization techniques** to implement those proposals, including configuration tuning, caching mechanisms, and microservices patterns.
-
-- **Smart Authentication System**
-  - Collaborated in researching and delivering **SmartOTP** solution to replace SMS OTPs for **20M+** users, saving over **$200K** annually and enhance authentication reliability.
-  - Implemented a secure key exchange, OTP generation and digital signature mechanism across critical APIs.
-  - Implemented **security hardening techniques** for Android apps including code obfuscation, root/jailbreak/tampering detection using native **C and JNI**, passed Viettel Group Information Security assessment.
+  - Monitored production systems using Grafana, **identifying and implementing performance optimizations** proactively across configuration tuning, caching, and microservices architecture.
 
 - **Data Tracking System**
-  - Designed and implemented a high-throughput **user activity tracking system** for mobile/web platforms, **replacing Appsflyer** licensing costs annually.
-  - Implemented a CMS and online tracking rule configuration module supporting **3,000+** dynamic tracking rules.
-  - Optimized rule validation engine by implementing a **decision-tree** based rule evaluator, reducing latency by 30% and improving data-capture throughput.
-  - Implemented reactive data fetching APIs with Spring WebFlux to improve throughput and responsiveness, handling **150M+ events daily**.
+  - Designed and developed a **high-throughput user activity tracking system** for mobile and web platforms, replacing 3rd party's licensing costs annually.
+  - Implemented a CMS and online tracking rule configuration module supporting **3,000+ dynamic tracking rules**.
+  - Optimized rule validation engine by implementing a **decision-tree based rule evaluator**, reducing latency by 30% and improving data-capture throughput.
+  - Built **reactive APIs using Spring WebFlux**, processing **150M+ events/day** with improved throughput and reduced response times under peak load.
+
+- **Smart Authentication System**
+  - Designed and delivered **SmartOTP** solution for **20M+** users, replacing SMS OTPs and **saving $200K+ annually** while improving authentication reliability.
+  - Implemented **secure key exchange, OTP generation, and digital signature mechanisms** across critical APIs, strengthening **authentication and API security**.
+  - Implemented **mobile security hardening** (code obfuscation, root/jailbreak/tamper detection) using native C/JNI, passing enterprise-level security audits.
 
 - **User's Contact System**
-  - Designed and implemented a backend module to collect and synchronize user contact data across devices for Viettel Money application, supporting **20M+** users.
-  - Implemented Roaring Bitmap to store user contacts, optimizing storage usage by 70% and improve contact discovery throughput by 80%.
+  - Designed a backend module to collect and synchronize user contact data across devices for Viettel Money application, supporting **20M+ users**.
+  - Optimized user contacts store using Roaring Bitmap, **reducing storage usage by 70%** and improve contact discovery throughput by **80%**.
 
 ---
 
 ## Technical Skills
 
-- **Programming Languages:** Java, C, Python, JavaScript, SQL
-- **Backend:** Spring Framework, Microservices, Apache Kafka, Camunda BPM, Caffeine, RESTful API, gRPC, JNI, Unit/Integration testing  
+- **Programming Languages:** Java, C, Python, JavaScript, PHP, SQL
+- **Backend:** Spring Framework, Spring Boot, Apache Kafka, Camunda BPM, REST APIs, gRPC, Unit & Integration Testing, Microservices, Distributed Systems
 - **Databases:** MariaDB/MySQL, MongoDB, Redis/Valkey, Elasticsearch, MinIO, ClickHouse
-- **Familiar:** Docker, k8s, AWS, CI/CD, Jenkins, ELK Stack, Grafana, Keycloak, k6, SDLC
+- **Familiar with:** AWS, Docker, Kubernetes, ELK, k6, Grafana, Keycloak,  CI/CD, SDLC, AI-assisted development
 
 ---
 
