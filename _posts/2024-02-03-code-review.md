@@ -3,6 +3,7 @@ title: "Human code review"
 layout: single
 date: 2024-02-03
 permalink: /posts/human-code-review/
+author_profile: false
 tags:
   - Code Review
   - Software Development

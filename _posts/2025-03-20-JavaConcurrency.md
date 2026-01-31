@@ -3,6 +3,7 @@ title: "Java Concurrency 101"
 layout: single
 date: 2025-03-20
 permalink: /posts/java-concurrency-101/
+author_profile: false
 tags:
   - Java
   - Concurrency

@@ -3,6 +3,7 @@ title: "Code refactoring practices"
 layout: single
 date: 2023-11-05
 permalink: /posts/code-refactoring-practices/
+author_profile: false
 tags:
   - Refactoring
   - Software Development

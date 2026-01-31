@@ -3,6 +3,7 @@ title: "Kafka Message compression"
 layout: single
 date: 2025-02-02
 permalink: /posts/kafka-message-compression/
+author_profile: false
 tags:
   - Kafka
 ---

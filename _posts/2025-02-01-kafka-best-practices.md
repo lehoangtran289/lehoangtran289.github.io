@@ -3,6 +3,7 @@ title: "Kafka Best Practices"
 layout: single
 date: 2025-02-01
 permalink: /posts/kafka-best-practices/
+author_profile: false
 tags:
   - Kafka
   - Best Practices

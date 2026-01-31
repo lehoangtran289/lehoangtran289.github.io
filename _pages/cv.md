@@ -13,7 +13,7 @@ redirect_from:
 
 ---
 
-[Download my CV (PDF)]({{ base_path }}/files/CV_LeHoangTran.pdf)
+[Download my CV (PDF)]({{ base_path }}/files/Resume_LeHoangTran_.pdf)
 
 ---
 
@@ -39,8 +39,8 @@ redirect_from:
 
 *Hanoi, Vietnam \| July 2025 – August 2025*
 
-- Researched a fault-tolerant online data migration solution for **10TB+** data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
-- Leveraged **AI-driven tools** to automate unit/integration tests and preliminary code review, improving developer productivity for code implementation by **25%**.
+- Researched a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
+- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity by 30%.
 
 ### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
 
