@@ -23,7 +23,7 @@ repository               : "lehoangtran289/lehoangtran289.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile2.png"
+  avatar           : "profile_img.png"
   name             : "Le-Hoang Tran"
   pronouns         : # example: "she/her"  
   bio              : "M.S. in Computer Science @ GMU'27 | Backend Software Engineer"
