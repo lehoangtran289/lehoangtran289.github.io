@@ -1,5 +1,5 @@
 ---
-title: "Spring Kafka Error Handling 101"
+title: "Spring Kafka Error Handling, with Best Practices"
 layout: single
 date: 2026-02-14
 permalink: /posts/spring-kafka-error-handling/
