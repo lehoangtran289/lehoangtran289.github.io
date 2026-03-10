@@ -13,6 +13,8 @@ tags:
 
 This article covers error handling strategies in Spring Kafka, including offset management, retry mechanisms, dead letter topics, batch error handling, and common pitfalls to avoid when building resilient Kafka consumers.
 
+Note that: This article is AI-generated based on the latest Spring Kafka documentation and best practices from several references.
+
 {% include toc %}
 
 ## 1. Understanding Error Handlers
