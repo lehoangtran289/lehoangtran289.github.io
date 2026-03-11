@@ -1,1 +1,39 @@
 <script type="module" src="{{ base_path }}/assets/js/main.min.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const tocLinks = document.querySelectorAll(".toc__menu a");
+    if (!tocLinks.length) return;
+
+    const headings = Array.from(
+      document.querySelectorAll("h2[id], h3[id], h4[id]")
+    );
+
+    function getActiveHeading() {
+      const offset = 80;
+      let active = headings[0];
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top <= offset) {
+          active = heading;
+        } else {
+          break;
+        }
+      }
+      return active;
+    }
+
+    function updateToc() {
+      const active = getActiveHeading();
+      if (!active) return;
+      tocLinks.forEach(function (link) {
+        link.classList.remove("toc__active");
+        if (link.getAttribute("href") === "#" + active.id) {
+          link.classList.add("toc__active");
+        }
+      });
+    }
+
+    window.addEventListener("scroll", updateToc, { passive: true });
+    updateToc();
+  });
+</script>
