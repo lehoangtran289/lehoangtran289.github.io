@@ -19,3 +19,7 @@ package-lock.json
 # Ignore folders related to IDEs
 .vscode/
 .github/copilot-instructions.md
+
+.codex
+.ai-devkit.json
+docs/ai

@@ -13,13 +13,13 @@ redirect_from:
 
 ---
 
-[Download my CV (PDF)]({{ base_path }}/files/Resume_LeHoangTran_.pdf)
+[View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran_.pdf)
 
 ---
 
 ## General Information
 
-- **Full Name:** Le-Hoang Tran
+- **Full Name:** Le Hoang Tran
 - **Languages**: Vietnamese (native), English (professional proficiency)
 
 ---
@@ -40,49 +40,49 @@ redirect_from:
 *Hanoi, Vietnam \| July 2025 – August 2025*
 
 - Researched a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
-- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity by 30%.
+- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity.
 
 ### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
 
 *Hanoi, Vietnam \| May 2021 – June 2025*  
 
 - **Customer Engagement Platform**
-  - Designed and implemented an in-house customer engagement platform delivering **100M+ events/day**, supporting personalized campaigns via push notifications, in-app messaging, and voucher distribution.
-  - Increased segmentation creation throughput from **500 to 35,000 QPS** by introducing **Roaring Bitmap-based indexing and caching** layers, reducing **p95 latency by 80%**.
-  - Implemented **business workflow automation** using Camunda, enabling non-technical users to configure workflows and reducing engineering intervention.
-  - Led a team of 4 backend engineers; driving sprint planning, system design, and code reviews to continuously extend system functionalities, in reaction to meeting user needs and growing demands for performance and scalability.
-  - Monitored production systems using Grafana, **identifying and implementing performance optimizations** proactively across configuration tuning, caching, and microservices architecture.
+  - Designed and implemented an **in-house marketing system** to support personalized campaigns via push notifications, in-app messaging, and rewards distribution, delivering **100M+ events** to end users daily.
+  - Optimized user segmentation creation **throughput from 500 to 35,000 QPS**, **reducing p95 latency by 80%** by introducing **Roaring Bitmap-based solution** and multiple caching layers.
+  - Engineered **workflow automation module** using Camunda, including business process orchestration, rule evaluation, timer events, enabling non-technical operations teams to configure marketing workflows independently.
+  - **Led a team of 4 backend engineers**; driving sprint plannings, system design and code reviews to continuously extend system functionalities, in reaction to meeting user needs and growing demands.
+  - **Monitored system metrics via Grafana** and proactively detect potential areas for performance improvement. Reported to relevant teams, applied multiple **optimization techniques** including configuration tuning, caching strategies, and microservices patterns.
 
 - **Data Tracking System**
-  - Designed and developed a **high-throughput user activity tracking system** for mobile and web platforms, replacing 3rd party's licensing costs annually.
-  - Implemented a CMS and online tracking rule configuration module supporting **3,000+ dynamic tracking rules**.
-  - Optimized rule validation engine by implementing a **decision-tree based rule evaluator**, reducing latency by 30% and improving data-capture throughput.
-  - Built **reactive APIs using Spring WebFlux**, processing **150M+ events/day** with improved throughput and reduced response times under peak load.
+  - Designed and delivered a **high-throughput event tracking system** for mobile and web platforms using Java and Spring Boot, processing **150M+ events/day** and **eliminating third-party licensing costs**.
+  - Implemented an online tracking rule configuration module, supporting **3,000+ dynamic tracking rules**.
+  - **Reducing data-capture latency by 30%** by introducing decision-tree based engine to optimize payload structure.
+  - Engineered reactive data fetching APIs with **Spring WebFlux** to improve throughput and responsiveness, handling over **150M+ events daily**.
 
 - **Smart Authentication System**
-  - Designed and delivered **SmartOTP** solution for **20M+** users, replacing SMS OTPs and **saving $200K+ annually** while improving authentication reliability.
-  - Implemented **secure key exchange, OTP generation, and digital signature mechanisms** across critical APIs, strengthening **authentication and API security**.
-  - Implemented **mobile security hardening** (code obfuscation, root/jailbreak/tamper detection) using native C/JNI, passing enterprise-level security audits.
+  - Collaborated in researching and delivering **SmartOTP** solution for **20M+ end users**, eliminating reliance on SMS OTPs, **saving over $200K annually** and enhance authentication reliability.
+  - Implemented secure key exchange, OTP generation, and digital signature mechanisms across critical APIs, strengthening authentication and API security.
+  - Applied **mobile security hardening techniques** (code obfuscation, root/jailbreak/tamper detection) to Android application using native **C/JNI**, passing enterprise-level security audits.
 
 - **User's Contact System**
-  - Designed a backend module to collect and synchronize user contact data across devices for Viettel Money application, supporting **20M+ users**.
-  - Optimized user contacts store using Roaring Bitmap, **reducing storage usage by 70%** and improve contact discovery throughput by **80%**.
+  - Designed a backend module to collect and synchronize user contact data across devices for Viettel Money application, supporting **20M+ end users**.
+  - Optimized user contacts store using Roaring Bitmap, **reducing storage usage by 70%** and improve contact discovery throughput by 80%.
+
+---
+
+## Projects
+
+- **Kafka clone**: a distributed fault-tolerant message queue in Go, build from scratch *In-progress*
 
 ---
 
 ## Technical Skills
 
-- **Programming Languages:** Java, C, Python, JavaScript, PHP, SQL
+- **Programming Languages:** Java, Go, C, JavaScript, Python
 - **Backend:** Spring Framework, Spring Boot, Apache Kafka, Camunda BPM, REST APIs, gRPC, Unit & Integration Testing, Microservices, Distributed Systems
 - **Databases:** MariaDB/MySQL, MongoDB, Redis/Valkey, Elasticsearch, MinIO, ClickHouse
-- **Familiar with:** AWS, Docker, Kubernetes, ELK, k6, Grafana, Keycloak,  CI/CD, SDLC, AI-assisted development
-
----
-
-## Publications
-
-- [Proposed Intelligent Decision Support System using Hedge Algebra integrated with Picture Fuzzy Relations for improvement of decision making in medical diagnoses](https://doi.org/10.1007/s40815-023-01548-4)
-  - Hoang, T.L., Pham, H.V., Hung, N.Q. et al. Proposed Intelligent Decision Support System Using Hedge Algebra Integrated with Picture Fuzzy Relations for Improvement of Decision-Making in Medical Diagnoses. Int. J. Fuzzy Syst. 25, 3260–3270 (2023). <https://doi.org/10.1007/s40815-023-01548-4>
+- **Infrastructure:** AWS, Docker, Kubernetes, CI/CD, Jenkins, SonarQube, Keycloak, ELK, k6
+- **Familiar with:** Agile SDLC, Distributed Systems, Design patterns, Cybersecurity, AI-assisted development
 
 ---
 
@@ -101,3 +101,10 @@ redirect_from:
   [Credential](https://www.credential.net/8c6a1f21-bbcc-45dc-8d0f-805187541b99)
 
 - **English Test**: TOEIC 955/990, IELTS 7.5 (Issued 2024)
+
+---
+
+## Publications
+
+- [Proposed Intelligent Decision Support System using Hedge Algebra integrated with Picture Fuzzy Relations for improvement of decision making in medical diagnoses](https://doi.org/10.1007/s40815-023-01548-4)
+  - Hoang, T.L., Pham, H.V., Hung, N.Q. et al. Proposed Intelligent Decision Support System Using Hedge Algebra Integrated with Picture Fuzzy Relations for Improvement of Decision-Making in Medical Diagnoses. Int. J. Fuzzy Syst. 25, 3260–3270 (2023). <https://doi.org/10.1007/s40815-023-01548-4>
