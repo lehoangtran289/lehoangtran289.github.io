@@ -46,33 +46,35 @@ redirect_from:
 
 *Hanoi, Vietnam \| May 2021 – June 2025*  
 
-- **Customer Engagement Platform**
+- **Customer Engagement Platform** | *2023 - 2025*
   - Designed and implemented an **in-house marketing system** to support personalized campaigns via push notifications, in-app messaging, and rewards distribution, delivering **100M+ events** to end users daily.
-  - Optimized user segmentation creation **throughput from 500 to 35,000 QPS**, **reducing p95 latency by 80%** by introducing **Roaring Bitmap-based solution** and multiple caching layers.
-  - Engineered **workflow automation module** using Camunda, including business process orchestration, rule evaluation, timer events, enabling non-technical operations teams to configure marketing workflows independently.
-  - **Led a team of 4 backend engineers**; driving sprint plannings, system design and code reviews to continuously extend system functionalities, in reaction to meeting user needs and growing demands.
-  - **Monitored system metrics via Grafana** and proactively detect potential areas for performance improvement. Reported to relevant teams, applied multiple **optimization techniques** including configuration tuning, caching strategies, and microservices patterns.
+  - Optimized user segmentation creation **throughput from 500 to 35,000 QPS**, **reducing p95 latency by 80%** by introducing a **Roaring Bitmap-based solution** and multiple caching layers.
+  - Engineered a **workflow automation module** using Camunda, including business process orchestration, rule evaluation, and timer events, enabling non-technical operations teams to configure marketing workflows independently.
+  - **Led a team of 4 backend engineers**, driving sprint planning, system design, and code reviews to continuously extend system functionality in response to user needs and growing demand.
+  - **Monitored system metrics via Grafana** and proactively identified performance improvement opportunities. Reported findings to relevant teams and applied **optimization techniques** including configuration tuning, caching strategies, and microservices patterns.
 
-- **Data Tracking System**
+- **Data Tracking System** | *2022 - 2023*
   - Designed and delivered a **high-throughput event tracking system** for mobile and web platforms using Java and Spring Boot, processing **150M+ events/day** and **eliminating third-party licensing costs**.
   - Implemented an online tracking rule configuration module, supporting **3,000+ dynamic tracking rules**.
-  - **Reducing data-capture latency by 30%** by introducing decision-tree based engine to optimize payload structure.
-  - Engineered reactive data fetching APIs with **Spring WebFlux** to improve throughput and responsiveness, handling over **150M+ events daily**.
+  - **Reduced data-capture latency by 30%** by introducing a decision tree-based engine to optimize the validation process.
+  - Engineered reactive data-fetching APIs with **Spring WebFlux** to support high-concurrency workloads, handling over **150M+ events daily**.
 
-- **Smart Authentication System**
-  - Collaborated in researching and delivering **SmartOTP** solution for **20M+ end users**, eliminating reliance on SMS OTPs, **saving over $200K annually** and enhance authentication reliability.
+- **Smart Authentication System** | *2021 - 2022*
+  - Collaborated on the research and delivery of a **SmartOTP** solution for **20M+ end users**, eliminating reliance on SMS OTPs, **saving over $200K annually**, and enhancing authentication reliability.
   - Implemented secure key exchange, OTP generation, and digital signature mechanisms across critical APIs, strengthening authentication and API security.
-  - Applied **mobile security hardening techniques** (code obfuscation, root/jailbreak/tamper detection) to Android application using native **C/JNI**, passing enterprise-level security audits.
+  - Applied **mobile security hardening techniques** (code obfuscation, root/jailbreak/tamper detection) to the Android application using native **C/JNI**, passing enterprise-level security audits.
 
-- **User's Contact System**
-  - Designed a backend module to collect and synchronize user contact data across devices for Viettel Money application, supporting **20M+ end users**.
-  - Optimized user contacts store using Roaring Bitmap, **reducing storage usage by 70%** and improve contact discovery throughput by 80%.
+- **User Contact System** | *2024*
+  - Designed a backend module to collect and synchronize user contact data across devices for the Viettel Money application, supporting **20M+ end users**.
+  - Optimized contact storage using Roaring Bitmap, **reducing storage usage by 70%** and improving contact discovery throughput by 80%.
 
 ---
 
 ## Projects
 
-- **Kafka clone**: a distributed fault-tolerant message queue in Go, build from scratch *In-progress*
+- **Go-Kafka clone**: a distributed fault-tolerant message queue in Go, build from scratch. *In-progress*
+- **Java Single Flight**: A easy-to-use Java for duplicate suppression mechanism, similar to the one in Go. *In-progress*
+- **Java Consistent Hashing**: A Java library for consistent hashing algorithm, supporting virtual nodes.
 
 ---
 
