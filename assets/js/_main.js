@@ -2,23 +2,15 @@
    Various functions that we want to use within the template
    ========================================================================== */
 
-const prefersDarkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
-
-// Determine the expected state of the theme toggle, which can be "dark", "light", or
-// "system". Default is "light".
+// Determine the expected state of the theme toggle, which can be "dark" or "light".
+// Default is "light".
 let determineThemeSetting = () => {
   let themeSetting = localStorage.getItem("theme");
-  return (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "light" : themeSetting;
+  return themeSetting === "dark" ? "dark" : "light";
 };
 
-// Determine the computed theme, which can be "dark" or "light". If the theme setting is
-// "system", the computed theme is determined based on the user's system preference.
-let determineComputedTheme = (themeSetting = determineThemeSetting()) => {
-  if (themeSetting != "system") {
-    return themeSetting;
-  }
-  return prefersDarkColorScheme.matches ? "dark" : "light";
-};
+// Determine the computed theme, which can be "dark" or "light".
+let determineComputedTheme = (themeSetting = determineThemeSetting()) => themeSetting;
 
 // Set the theme on page load or when explicitly called
 let setTheme = (theme) => {
@@ -89,13 +81,8 @@ $(document).ready(function () {
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
 
-  // Default to light unless the user explicitly chose a different theme.
+  // Default to light unless the user explicitly chose dark.
   setTheme();
-  prefersDarkColorScheme.addEventListener("change", (e) => {
-    if (determineThemeSetting() === "system") {
-      setTheme(e.matches ? "dark" : "light");
-    }
-  });
 
   // Enable the theme toggle
   $('#theme-toggle').on('click', toggleTheme);
