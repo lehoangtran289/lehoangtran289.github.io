@@ -13,7 +13,7 @@ redirect_from:
 
 ---
 
-[View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran_.pdf)
+[View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
 
 ---
 
@@ -66,24 +66,24 @@ redirect_from:
 
 - **User Contact System** \| *2024*
   - Designed a backend module to collect and synchronize user contact data across devices for the Viettel Money application, supporting **20M+ end users**.
-  - Optimized contact storage using Roaring Bitmap, **reducing storage usage by 70%** and improving contact discovery throughput by 80%.
+  - Optimized contact storage with Roaring Bitmap, **reducing storage usage by 70%** and lowering user matching latency.
 
 ---
 
 ## Projects
 
 - **Go-Kafka clone**: a distributed fault-tolerant message queue in Go, build from scratch. *In-progress*
-- **Java Single Flight**: A easy-to-use Java for duplicate suppression mechanism, similar to the one in Go. *In-progress*
-- **Java Consistent Hashing**: A Java library for consistent hashing algorithm, supporting virtual nodes.
+- **[Java Single Flight](https://github.com/lehoangtran289/singleflight)**: A easy-to-use Java for duplicate suppression mechanism, similar to the one in Go. *In-progress*
+- **[Java Consistent Hashing](https://github.com/lehoangtran289/consistent-hashing)**: A Java library for consistent hashing algorithm, supporting virtual nodes.
 
 ---
 
 ## Technical Skills
 
-- **Programming Languages:** Java, Go, C, JavaScript, Python
+- **Languages:** Java, Go, C, JavaScript, Python
 - **Backend:** Spring Framework, Spring Boot, Apache Kafka, Camunda BPM, REST APIs, gRPC, Unit & Integration Testing, Microservices, Distributed Systems
 - **Databases:** MariaDB/MySQL, MongoDB, Redis/Valkey, Elasticsearch, MinIO, ClickHouse
-- **Infrastructure:** AWS, Docker, Kubernetes, CI/CD, Jenkins, SonarQube, Keycloak, ELK, k6
+- **Infrastructure:** AWS, Docker, Kubernetes, CI/CD, Jenkins, ArgoCD, Helm, SonarQube, Keycloak, ELK, k6
 - **Familiar with:** Agile SDLC, Distributed Systems, Design patterns, Cybersecurity, AI-assisted development
 
 ---
