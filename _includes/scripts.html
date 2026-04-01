@@ -1,3 +1,12 @@
+<script>
+  try {
+    if (!window.localStorage.getItem("theme")) {
+      window.localStorage.setItem("theme", "light");
+    }
+  } catch (error) {
+    // Ignore storage access failures and fall back to the rendered light theme.
+  }
+</script>
 <script type="module" src="{{ base_path }}/assets/js/main.min.js"></script>
 
 <script>

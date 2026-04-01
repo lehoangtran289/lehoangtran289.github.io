@@ -2,33 +2,32 @@
    Various functions that we want to use within the template
    ========================================================================== */
 
+const prefersDarkColorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+
 // Determine the expected state of the theme toggle, which can be "dark", "light", or
-// "system". Default is "system".
+// "system". Default is "light".
 let determineThemeSetting = () => {
   let themeSetting = localStorage.getItem("theme");
-  return (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "system" : themeSetting;
+  return (themeSetting != "dark" && themeSetting != "light" && themeSetting != "system") ? "light" : themeSetting;
 };
 
 // Determine the computed theme, which can be "dark" or "light". If the theme setting is
 // "system", the computed theme is determined based on the user's system preference.
-let determineComputedTheme = () => {
-  let themeSetting = determineThemeSetting();
+let determineComputedTheme = (themeSetting = determineThemeSetting()) => {
   if (themeSetting != "system") {
     return themeSetting;
   }
-  return (userPref && userPref("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  return prefersDarkColorScheme.matches ? "dark" : "light";
 };
-
-// detect OS/browser preference
-const browserPref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
 // Set the theme on page load or when explicitly called
 let setTheme = (theme) => {
-  const use_theme =
+  const requestedTheme =
     theme ||
     localStorage.getItem("theme") ||
     $("html").attr("data-theme") ||
-    browserPref;
+    "light";
+  const use_theme = determineComputedTheme(requestedTheme);
 
   if (use_theme === "dark") {
     $("html").attr("data-theme", "dark");
@@ -90,14 +89,13 @@ $(document).ready(function () {
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
 
-  // If the user hasn't chosen a theme, follow the OS preference
+  // Default to light unless the user explicitly chose a different theme.
   setTheme();
-  window.matchMedia('(prefers-color-scheme: light)')
-        .addEventListener("change", (e) => {
-          if (!localStorage.getItem("theme")) {
-            setTheme(e.matches ? "dark" : "light");
-          }
-        });
+  prefersDarkColorScheme.addEventListener("change", (e) => {
+    if (determineThemeSetting() === "system") {
+      setTheme(e.matches ? "dark" : "light");
+    }
+  });
 
   // Enable the theme toggle
   $('#theme-toggle').on('click', toggleTheme);
