@@ -9,7 +9,7 @@ tags:
   - Developer Tools
 ---
 
-This post is a practical summary of the official OpenAI guide: [Codex Best Practices](https://developers.openai.com/codex/learn/best-practices/). The core idea is that Codex works best when you treat it less like a one-off assistant and more like a teammate that you configure, guide, and improve over time.
+**This post is AI-generated**. It is a practical summary of the official OpenAI guide: [Codex Best Practices](https://developers.openai.com/codex/learn/best-practices/). The core idea is that Codex works best when you treat it less like a one-off assistant and more like a teammate that you configure, guide, and improve over time.
 
 {% include toc %}
 
