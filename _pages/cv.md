@@ -11,8 +11,6 @@ redirect_from:
 
 {% include base_path %}
 
-{% include toc %}
-
 ---
 
 [View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
