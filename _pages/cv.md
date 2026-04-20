@@ -65,7 +65,7 @@ redirect_from:
   - Applied **mobile security hardening techniques** (code obfuscation, root/jailbreak/tamper detection) to the Android application using native **C/JNI**, passing enterprise-level security audits.
 
 - **User Contact System** \| *2024*
-  - Designed a backend module to collect and synchronize user contact data across devices for the Viettel Money application, supporting **20M+ end users**.
+  - Designed and implemented a backend module to collect and synchronize user contact data across multiple devices for the Viettel Money application, **supporting 20M+ end users**.
   - Optimized contact storage with Roaring Bitmap, **reducing storage usage by 70%** and lowering user matching latency.
 
 ---

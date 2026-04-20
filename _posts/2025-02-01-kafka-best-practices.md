@@ -55,10 +55,10 @@ Below are some notes on Kafka best practices that I found useful while working w
 ### Critical configs
 
 - Batch.size (size based batching)
-- Linger.ms ( time based batching)
+- Linger.ms (time based batching)
 - Compression.type
 - Max.in.flight.requests.per.connection (affects ordering)
-- Acks ( affects durability)
+- Acks (affects durability)
 
 ### Performance notes
 
@@ -127,3 +127,5 @@ Below are some notes on Kafka best practices that I found useful while working w
 
 - <https://community.cloudera.com/t5/Community-Articles/Kafka-Best-Practices/ta-p/249371>
 - <https://www.redpanda.com/guides/kafka-performance-kafka-rebalancing>
+- <https://dev.to/konstantinas_mamonas/kafka-producers-explained-partitioning-batching-and-reliability-4bm8>
+- <https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/?placement=&device=c&creative=&session_ref=https%3A%2F%2Fwww.google.com%2F)>
