@@ -13,7 +13,7 @@ redirect_from:
 
 ---
 
-[View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
+[View my resume (PDF)]({{ base_path }}/files/Resume_HoangTran.pdf)
 
 ---
 
@@ -26,10 +26,11 @@ redirect_from:
 
 ## Education
 
-- M.S. in Computer Science, [George Mason University](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Dec 2026 (expected)
-  - Current GPA: 4.0/4.0
+- M.S. in Computer Science, [George Mason University](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Dec 2026
+  - Current GPA: 3.86/4.0
 - B.S. in Information Technology, [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| 2022
-  - Excellence Degree (Top 5%) (5 years program)
+  - GPA: 3.62/4.0 \| Excellence Degree (Top 5% of cohort)
+  - Excellence Scholarship Academic Award in 2021
 
 ---
 
@@ -39,10 +40,10 @@ redirect_from:
 
 *Hanoi, Vietnam \| July 2025 – August 2025*
 
-- Researched a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
+- Researched and proposed a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
 - Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity.
 
-### **[Viettel Group](https://viettel.com.vn/en/) - Backend Software Engineer**
+### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
 
 *Hanoi, Vietnam \| May 2021 – June 2025*  
 
@@ -79,12 +80,12 @@ redirect_from:
 
 ## Technical Skills
 
-- **Languages:** Java, C, Go, Python, PHP, SQL, JavaScript, TypeScript, Bash
-- **Backend:** Spring Boot, Spring WebFlux, Apache Kafka, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
-- **Frontend:** HTML/CSS, ReactJS, Redux, Tailwind
-- **Databases:** MariaDB, MySQL, MongoDB, Redis/Valkey, Elasticsearch, MinIO, S3, ClickHouse
-- **Platforms/Infra:** AWS, Docker, Kubernetes, Linux, CI/CD, Jenkins, ArgoCD, Helm, Grafana, ELK, Wordpress, Keycloak, K6, Git
-- **Familiar with:** Agile SDLC, Distributed Systems, Design patterns, Cybersecurity, AI-assisted development
+- **Languages:** Java, C, Python, Go
+- **Backend:** Spring Framework, Spring Boot, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
+- **Infra \& Data:** Apache Kafka, Redis, MariaDB, MySQL, MongoDB, Elasticsearch, MinIO, Clickhouse
+- **Platforms/Infra:** Kubernetes, Docker, Jenkins, Grafana, ELK, Keycloak, K6, Linux, Bash, Git
+- **AI Tooling:** Claude, OpenAI Codex, Agentic Workflows, Prompt Engineering
+- **Familiar with:** Agile SDLC, Distributed Systems, Design patterns, Cybersecurity
 
 ---
 
