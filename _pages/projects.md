@@ -9,7 +9,7 @@ Personal projects I've built or am actively working on.
 
 ---
 
-## [Go-Kafka Clone](https://github.com/lehoangtran289) *(In Progress)*
+## [Go Kafka](https://github.com/lehoangtran289) *(In Progress)*
 
 A distributed, fault-tolerant message queue built from scratch in Go, inspired by Apache Kafka's design.
 

@@ -14,13 +14,6 @@ redirect_from:
 ---
 
 [View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
-<!-- 
----
-
-## General Information
-
-- **Full Name:** Le Hoang Tran
-- **Languages**: Vietnamese (native), English (professional proficiency) -->
 
 ---
 
@@ -74,7 +67,7 @@ redirect_from:
 
 - **Languages:** Java, C, Python, Go
 - **Backend:** Spring Framework, Spring Boot, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
-- **Infra \& Data:** Apache Kafka, Redis, MariaDB, MySQL, MongoDB, Elasticsearch, MinIO, Clickhouse
+- **Infra & Data:** Apache Kafka, Redis, MariaDB, MySQL, MongoDB, Elasticsearch, MinIO, Clickhouse
 - **Platforms/Infra:** Kubernetes, Docker, Jenkins, Grafana, ELK, Keycloak, K6, Linux, Bash, Git
 - **AI Tooling:** Claude, OpenAI Codex, Agentic Workflows, Prompt Engineering
 - **Familiar with:** Agile SDLC, Distributed Systems, Design patterns, Cybersecurity
