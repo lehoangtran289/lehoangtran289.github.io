@@ -25,6 +25,9 @@ main:
 
   - title: "Curriculum Vitae"
     url: /cv/
+
+  - title: "Projects"
+    url: /projects/
         
   - title: "Blog Posts"
     url: /year-archive/
