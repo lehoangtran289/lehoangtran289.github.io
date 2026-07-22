@@ -21,7 +21,7 @@ redirect_from:
 
 - [**George Mason University**](https://cec.gmu.edu/) \| M.S. in Computer Science \| Fairfax, VA, USA \| Dec 2026
   - Current GPA: 3.86/4.0
-- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| B.S. in Information Technology \| Hanoi, Vietnam \| 2022
+- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| B.S. in Information Technology \| Hanoi, Vietnam \| 2021
   - GPA: 3.62/4.0 \| Excellence Degree (Top 5% of cohort)
   - Excellence Scholarship Academic Award in 2021
 
@@ -29,12 +29,12 @@ redirect_from:
 
 ## Work experience
 
-### **[LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Backend Software Engineer**  
+<!-- ### **[LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Backend Software Engineer**  
 
 *Hanoi, Vietnam \| July 2025 – August 2025*
 
 - Researched and proposed a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
-- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity.
+- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity. -->
 
 ### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
 
