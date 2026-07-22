@@ -1,5 +1,5 @@
 ---
-title: "Building a Boolean Expression Evaluator in Java"
+title: "Build a Boolean Expression Evaluator in Java"
 layout: single
 date: 2025-08-22
 permalink: /posts/boolean-expression-evaluator/
@@ -10,103 +10,72 @@ tags:
   - Best Practices
 ---
 
-This article demonstrates how to build a Boolean expression evaluator in Java that parses and evaluates complex logical expressions at runtime. We'll explore why this pattern matters in enterprise systems, compare it to traditional if-else approaches, and walk through a complete implementation including tokenization, parsing, and evaluation.
+Business rules often start as simple `if` statements. That is usually fine, because hardcoded logic is fast, easy to debug, and checked by the compiler. The problem starts when the rule changes more often than the codebase, or when different customers, cohorts, regions, or experiments need different versions of the same decision logic.
 
-{% include toc %}
+At that point, every rule change becomes a deployment. A product manager asks to add a region, marketing wants to test a different eligibility path, sales needs an enterprise override, and engineering ends up threading feature flags through a method that was supposed to be a clean predicate. The code still runs, but it no longer represents a stable algorithm. It represents mutable business policy trapped inside compiled Java.
 
-## 1. The Problem: Hardcoded Business Logic
+A Boolean expression evaluator moves that policy into data. The application still controls which variables are available and how those variables are computed, but the rule itself can be stored, validated, versioned, cached, and evaluated at runtime.
 
-### 1.1. The Simple If-Else Approach
+This post builds a small Boolean expression evaluator in Java. It supports variables, `AND`, `OR`, `NOT`, and parentheses. The implementation uses a tokenizer, a recursive descent parser, an abstract syntax tree, and an evaluator with real short-circuit behavior.
 
-When business logic is straightforward, hardcoding rules makes sense:
+## 1. The Problem with Hardcoded Rules
 
-```java
-public boolean checkEligibility(User user) {
-    if (user.isActive() && user.getAge() >= 18) {
-        return true;
-    }
-    return false;
-}
-```
-
-**This works fine when:**
-
-- Logic is simple and rarely changes
-- Only developers need to modify rules
-- You have a handful of conditions to manage
-- Rules don't vary per customer or tenant
-
-### 1.2. When Simple Breaks Down
-
-Say you need to check user eligibility with complex nested conditions:
+A simple eligibility check is a good fit for normal Java code.
 
 ```java
 public boolean checkEligibility(User user) {
-    if (user.isActive() && 
-        ((user.getAge() >= 18 && user.hasVerifiedEmail()) || 
-         (user.getAge() >= 13 && user.hasParentConsent())) &&
-        (user.getRegion().equals("US") || user.getRegion().equals("CA") || 
-         user.getRegion().equals("UK")) &&
-        !user.isBlacklisted() &&
-        (user.isPremium() || (user.isTrial() && user.getDaysActive() <= 30))) {
-        return true;
-    }
-    return false;
+    return user.isActive() && user.getAge() >= 18;
 }
 ```
 
-**This hardcoded logic checks:**
-- Active users
-- AND (18+ with verified email OR 13+ with parental consent)
-- AND in US/CA/UK regions
-- AND not blacklisted
-- AND (premium OR trial within 30 days)
+This is readable, fast, and hard to misuse. The rule is close to the domain model, the compiler checks the method, and tests can cover the few branches that exist.
 
-**The fundamental problem: This logic is frozen in code.**
-
-What happens when requirements change?
-
-→ Business wants to add EU region? **Code change + deployment**
-
-→ Marketing wants to test removing the email verification requirement? **Code change + deployment**
-
-→ Sales wants a special rule for enterprise customers? **Code change + deployment**
-
-Each change requires:
-- Developer to modify the condition
-- Pull request and code review
-- QA testing the change
-- Production deployment
-- Rollback plan if something breaks
-
-**More problems:**
-- The nested condition becomes unreadable as complexity grows
-- No way for non-developers to tweak the logic
-- A/B testing different rules requires feature flags everywhere
-- Multi-tenant scenarios (different rules per customer) explode the codebase
-- Every rule variant needs separate code branches
-
-## 2. The Solution: Runtime Expression Evaluation
-
-### 2.1. Store Rules as Data
-
-Instead of hardcoding logic, store the rule as a string expression:
+Now consider a more realistic rule.
 
 ```java
-// Store this in database or config file
-String eligibilityRule = 
-    "isActive AND " +
-    "((age_gte_18 AND hasVerifiedEmail) OR (age_gte_13 AND hasParentConsent)) AND " +
-    "(region_US OR region_CA OR region_UK) AND " +
-    "NOT isBlacklisted AND " +
-    "(isPremium OR (isTrial AND daysActive_lte_30))";
+public boolean checkEligibility(User user) {
+    return user.isActive()
+            && ((user.getAge() >= 18 && user.hasVerifiedEmail())
+                || (user.getAge() >= 13 && user.hasParentConsent()))
+            && ("US".equals(user.getRegion())
+                || "CA".equals(user.getRegion())
+                || "UK".equals(user.getRegion()))
+            && !user.isBlacklisted()
+            && (user.isPremium()
+                || (user.isTrial() && user.getDaysActive() <= 30));
+}
 ```
 
-Build a context map from the User object:
+The method is still correct, but it now combines several concerns:
+
+* extracting facts from `User`
+* encoding business policy
+* controlling Boolean operator precedence
+* handling future rule variants through code changes
+
+The immediate cost is readability. The larger cost is operational. Adding a new region, changing the trial window, removing email verification for an experiment, or introducing a tenant-specific override requires a code change, a review, a test cycle, and a deployment. If the system serves multiple tenants, this pattern usually turns into duplicated methods, nested feature flags, or rule-specific branches scattered across services.
+
+A runtime evaluator separates the stable part from the volatile part. Java code computes named facts, while a stored expression decides how those facts are combined.
+
+## 2. Rules as Runtime Data
+
+Instead of compiling the whole rule into Java, store the Boolean expression as a string.
+
+```java
+String eligibilityRule =
+        "isActive AND "
+      + "((age_gte_18 AND hasVerifiedEmail) OR (age_gte_13 AND hasParentConsent)) AND "
+      + "(region_US OR region_CA OR region_UK) AND "
+      + "NOT isBlacklisted AND "
+      + "(isPremium OR (isTrial AND daysActive_lte_30))";
+```
+
+The application builds a context map from the domain object.
 
 ```java
 public Map<String, Boolean> buildContext(User user) {
     Map<String, Boolean> context = new HashMap<>();
+
     context.put("isActive", user.isActive());
     context.put("age_gte_18", user.getAge() >= 18);
     context.put("age_gte_13", user.getAge() >= 13);
@@ -119,315 +88,331 @@ public Map<String, Boolean> buildContext(User user) {
     context.put("isPremium", user.isPremium());
     context.put("isTrial", user.isTrial());
     context.put("daysActive_lte_30", user.getDaysActive() <= 30);
+
     return context;
 }
 ```
 
-Now your eligibility check becomes:
+The service method becomes small again.
 
 ```java
 public boolean checkEligibility(User user, String expression) {
     Map<String, Boolean> context = buildContext(user);
-
     return BooleanEvaluator.evaluate(expression, context);
 }
 ```
 
-**The game-changer: Custom input at runtime**
+This design makes one boundary explicit: the evaluator does not know about `User`, regions, subscriptions, trials, or blacklists. It only knows how to evaluate a Boolean expression against named Boolean values. That constraint keeps the evaluator reusable and reduces the risk of turning it into an unbounded scripting layer.
 
-The expression `"isActive AND (age_gte_18 OR hasParentConsent)"` and the map of boolean values are **both inputs** to the evaluator.
+The trade-off is also clear. You lose compile-time validation for the expression string, so you must replace it with save-time validation, good error messages, safe rollout, and monitoring. Runtime rules are useful when policy changes frequently, but they need guardrails because bad rules fail at runtime unless you catch them earlier.
 
-→ Want to add EU region? Change the expression string in the database
+## 3. Use Cases
 
-→ Want to test without email verification? Modify the expression
+Boolean expression evaluators are useful when a system needs configurable decision logic but does not need a full rule engine.
 
-→ Different rule for enterprise customers? Store different expressions per customer
-
-**No code changes. No deployments. Just data updates.**
-
-**Benefits of this approach:**
-- Rules can be changed without code deployment
-- Business users can modify rules through UI
-- Easy to A/B test different rule variations
-- Rules are versioned and auditable in the database
-- Significantly simpler codebase
-- Same evaluator code handles any Boolean logic
-
-### 2.2. When to Use Each Approach
-
-**Use if-else when:**
-- You have < 5 simple conditions
-- Logic never or rarely changes
-- Only developers manage the logic
-- Performance is absolutely critical (nanoseconds matter)
-
-**Use expression evaluator when:**
-- Business rules are complex and nested
-- Non-developers need to configure rules
-- You have multi-tenant requirements
-- Rules change frequently
-- You need rule versioning and audit trails
-- Your system has 10+ different rule variations
-
-## 3. Real-World Use Cases
-
-Expression evaluators shine in these scenarios:
-
-### 3.1. Feature Flags and A/B Testing
+Feature flags are a common example.
 
 ```java
-// Rule stored in database:
-// "user_premium AND (country_US OR country_CA) AND NOT internal_user"
+String rule = "isEmployee AND country_US AND NOT blockedUser";
 
-if (evaluator.evaluate(featureFlagRule, userContext)) {
-    showNewFeature();
+if (BooleanEvaluator.evaluate(rule, context)) {
+    showFeature();
 }
 ```
 
-### 3.2. Access Control and Permissions
+Authorization checks are another natural fit, especially when policies differ between tenants or environments.
 
 ```java
-// "hasRole_admin OR (hasRole_manager AND department_engineering)"
+String rule = "hasRole_admin OR (hasRole_manager AND department_engineering)";
 
-if (evaluator.evaluate(accessRule, userContext)) {
+if (BooleanEvaluator.evaluate(rule, context)) {
     allowAccess();
 }
 ```
 
-### 3.3. Notification Rules
+Notification systems can use the same pattern to decide whether an event should trigger a message.
 
 ```java
-// "order_total_gt_1000 AND (vip_customer OR first_time_buyer)"
+String rule = "order_total_gt_1000 AND (vipCustomer OR firstPurchase)";
 
-if (evaluator.evaluate(notificationRule, orderContext)) {
-    sendSpecialOfferEmail();
+if (BooleanEvaluator.evaluate(rule, context)) {
+    sendOffer();
 }
 ```
 
-### 3.4. Dynamic Pricing Rules
+The evaluator should remain narrow. If the business needs numeric comparison, string matching, list membership, date arithmetic, or custom functions, those features can be added, but each one expands the language surface and increases the cost of validation, testing, and abuse prevention.
 
-```java
-// "(peak_hours AND high_demand) OR (weekend AND event_nearby)"
+## 4. Evaluator Architecture
 
-if (evaluator.evaluate(surgePricingRule, context)) {
-    applySurgeMultiplier();
-}
+The evaluator has three stages.
+
+```text
+Input:
+  "NOT (A AND B) OR C"
+
+Tokenizer:
+  [NOT, LPAREN, A, AND, B, RPAREN, OR, C, EOF]
+
+Parser:
+  builds an abstract syntax tree
+
+AST:
+        OR
+       /  \
+     NOT   C
+      |
+     AND
+    /   \
+   A     B
+
+Evaluator:
+  walks the tree and reads values from the context map
 ```
 
-### 3.5. Multi-Tenant Custom Rules
+The tokenizer turns raw characters into tokens. The parser turns tokens into an abstract syntax tree, usually called an AST. The evaluator walks that tree and computes the final Boolean result.
 
-```java
-// Each customer gets their own eligibility rule
-// Customer A: "isActive AND (age_gte_18 OR hasParentConsent)"
-// Customer B: "isActive AND isPremium AND NOT isBlacklisted"
-// Customer C: "(region_US OR region_EU) AND (isActive OR isTrial)"
+This architecture gives each component one job. Tokenization errors are about invalid characters. Parser errors are about invalid grammar. Evaluation errors are about missing variables or unsupported operators. That separation matters in production because different failures need different responses: invalid syntax should block rule activation, while missing variables usually indicate a mismatch between the rule catalog and the application’s context builder.
 
-public boolean checkEligibility(User user, String tenantId) {
-    String rule = ruleRepository.findByTenantId(tenantId);
-    Map<String, Boolean> context = buildContext(user);
-    return BooleanEvaluator.evaluate(rule, context);
-}
+The grammar is small.
+
+```text
+expression    := orExpression
+orExpression  := andExpression ("OR" andExpression)*
+andExpression := notExpression ("AND" notExpression)*
+notExpression := "NOT" notExpression | primary
+primary       := VARIABLE | "(" expression ")"
 ```
 
-## 4. Architecture Overview
-
-Our expression evaluator consists of three main components:
-
-```
-Input: "NOT (A AND B) OR C"
-    ↓
-[Tokenizer] → Breaks input into tokens
-    ↓
-Tokens: [NOT, LPAREN, A, AND, B, RPAREN, OR, C]
-    ↓
-[Parser] → Builds Abstract Syntax Tree (AST)
-    ↓
-AST:         OR
-           /    \
-         NOT     C
-          |
-        AND
-       /   \
-      A     B
-    ↓
-[Evaluator] → Evaluates AST with variable values
-    ↓
-Result: true/false
-```
-
-**Why this architecture?**
-- **Separation of concerns** → Each component has one job
-- **Extensibility** → Easy to add new operators or data types
-- **Testability** → Each component can be tested independently
-- **Performance** → Parse once, evaluate many times
+This gives `NOT` the highest precedence, followed by `AND`, then `OR`. Parentheses override that order.
 
 ## 5. Implementation
 
-### 5.1. Token and TokenType
+The implementation below uses a hand-written recursive descent parser. For this grammar, that is simpler than introducing a parser generator, and it makes precedence easy to inspect in code.
 
-First, define the building blocks:
+### 5.1. Token Model
+
+Each token has a type, value, and source position. Position is not needed for evaluation, but it is useful for error messages.
 
 ```java
 enum TokenType {
-    VARIABLE, AND, OR, NOT, LPAREN, RPAREN, EOF
+    VARIABLE,
+    AND,
+    OR,
+    NOT,
+    LPAREN,
+    RPAREN,
+    EOF
 }
 
-class Token {
-    TokenType type;
-    String value;
+final class Token {
+    final TokenType type;
+    final String value;
+    final int position;
 
-    Token(TokenType type, String value) {
+    Token(TokenType type, String value, int position) {
         this.type = type;
         this.value = value;
+        this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return value == null ? type.name() : type + "(" + value + ")";
     }
 }
 ```
 
-### 5.2. Tokenizer
+The language reserves `AND`, `OR`, and `NOT`. Variable names are case-sensitive in this implementation, while keywords are case-insensitive.
 
-The tokenizer converts a string into a list of tokens:
+### 5.2. Parse Exception
+
+A runtime expression language needs precise errors. Returning only `Invalid expression` is cheap for the implementation, but expensive for whoever has to debug a rejected rule.
 
 ```java
-class Tokenizer {
+final class ExpressionParseException extends RuntimeException {
+    ExpressionParseException(String message, int position, String expression) {
+        super(format(message, position, expression));
+    }
+
+    private static String format(String message, int position, String expression) {
+        return message + " at position " + position
+                + System.lineSeparator()
+                + expression
+                + System.lineSeparator()
+                + " ".repeat(Math.max(0, position)) + "^";
+    }
+}
+```
+
+For example, `A AND (B OR)` can point directly to the token position where another operand was expected.
+
+### 5.3. Tokenizer
+
+The tokenizer scans the input once. It skips whitespace, emits parentheses, reads identifiers, and maps reserved keywords to operator tokens.
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+final class Tokenizer {
     private static final Map<String, TokenType> KEYWORDS = Map.of(
-        "AND", TokenType.AND,
-        "OR", TokenType.OR,
-        "NOT", TokenType.NOT
+            "AND", TokenType.AND,
+            "OR", TokenType.OR,
+            "NOT", TokenType.NOT
     );
 
-    public static List<Token> tokenize(String input) {
+    private Tokenizer() {
+    }
+
+    static List<Token> tokenize(String input) {
+        if (input == null) {
+            throw new IllegalArgumentException("Expression must not be null");
+        }
+
         List<Token> tokens = new ArrayList<>();
         int pos = 0;
 
         while (pos < input.length()) {
             char ch = input.charAt(pos);
 
-            // Skip whitespace
-            if (Character.isWhitespace(ch)) { pos++; continue; }
-            
-            // Handle parentheses
-            if (ch == '(') { tokens.add(new Token(TokenType.LPAREN, "(")); pos++; continue; }
-            if (ch == ')') { tokens.add(new Token(TokenType.RPAREN, ")")); pos++; continue; }
-
-            // Handle variables and keywords
-            if (Character.isLetter(ch)) {
-                StringBuilder sb = new StringBuilder();
-                while (pos < input.length() &&
-                       (Character.isLetterOrDigit(input.charAt(pos)) || input.charAt(pos) == '_')) {
-                    sb.append(input.charAt(pos++));
-                }
-                String value = sb.toString();
-                String upper = value.toUpperCase();
-                TokenType type = KEYWORDS.getOrDefault(upper, TokenType.VARIABLE);
-                tokens.add(new Token(type, KEYWORDS.containsKey(upper) ? upper : value));
+            if (Character.isWhitespace(ch)) {
+                pos++;
                 continue;
             }
 
-            throw new RuntimeException("Unexpected character '" + ch + "' at position " + pos);
+            if (ch == '(') {
+                tokens.add(new Token(TokenType.LPAREN, "(", pos));
+                pos++;
+                continue;
+            }
+
+            if (ch == ')') {
+                tokens.add(new Token(TokenType.RPAREN, ")", pos));
+                pos++;
+                continue;
+            }
+
+            if (Character.isLetter(ch)) {
+                int start = pos;
+                StringBuilder builder = new StringBuilder();
+
+                while (pos < input.length()) {
+                    char current = input.charAt(pos);
+
+                    if (Character.isLetterOrDigit(current) || current == '_') {
+                        builder.append(current);
+                        pos++;
+                    } else {
+                        break;
+                    }
+                }
+
+                String rawValue = builder.toString();
+                String upperValue = rawValue.toUpperCase(Locale.ROOT);
+                TokenType type = KEYWORDS.getOrDefault(upperValue, TokenType.VARIABLE);
+                String tokenValue = type == TokenType.VARIABLE ? rawValue : upperValue;
+
+                tokens.add(new Token(type, tokenValue, start));
+                continue;
+            }
+
+            throw new ExpressionParseException(
+                    "Unexpected character '" + ch + "'",
+                    pos,
+                    input
+            );
         }
 
-        tokens.add(new Token(TokenType.EOF, null));
+        tokens.add(new Token(TokenType.EOF, null, input.length()));
         return tokens;
     }
 }
 ```
 
-**What it does:**
-- Scans the input character by character
-- Recognizes keywords (AND, OR, NOT)
-- Identifies variables (alphanumeric + underscore)
-- Handles parentheses for grouping
-- Throws errors for invalid characters
+This version intentionally rejects Java-style operators such as `&&`, `||`, and `!`. Supporting aliases is easy, but doing so often makes rule authoring less consistent. A small language is easier to validate, document, and expose through a UI.
 
-### 5.3. Abstract Syntax Tree Nodes
+### 5.4. AST Nodes
 
-Define nodes for our AST:
+The AST has three node types.
 
 ```java
-abstract class Node {}
-
-class VariableNode extends Node {
-    String name;
-    VariableNode(String name) { this.name = name; }
+abstract class Node {
 }
 
-class UnaryOpNode extends Node {
-    String operator;
-    Node operand;
+final class VariableNode extends Node {
+    final String name;
+
+    VariableNode(String name) {
+        this.name = name;
+    }
+}
+
+final class UnaryOpNode extends Node {
+    final String operator;
+    final Node operand;
+
     UnaryOpNode(String operator, Node operand) {
-        this.operator = operator; 
+        this.operator = operator;
         this.operand = operand;
     }
 }
 
-class BinaryOpNode extends Node {
-    String operator;
-    Node left, right;
+final class BinaryOpNode extends Node {
+    final String operator;
+    final Node left;
+    final Node right;
+
     BinaryOpNode(String operator, Node left, Node right) {
-        this.operator = operator; 
-        this.left = left; 
+        this.operator = operator;
+        this.left = left;
         this.right = right;
     }
 }
 ```
 
-**Node types:**
-- **VariableNode** → Represents a variable (e.g., `isActive`)
-- **UnaryOpNode** → Single operator (e.g., `NOT isActive`)
-- **BinaryOpNode** → Two operands (e.g., `A AND B`)
+The nodes are immutable, which makes them safe to cache and share across threads. That property becomes important once parsed expressions are reused across requests.
 
-### 5.4. Parser
+### 5.5. Parser
 
-The parser builds the AST following operator precedence:
+The parser implements operator precedence by splitting the grammar into methods. `parseOr` handles the lowest-precedence operator, `parseAnd` handles the next level, `parseNot` handles unary negation, and `parsePrimary` handles variables and parentheses.
 
 ```java
-class Parser {
-    private List<Token> tokens;
+import java.util.List;
+import java.util.function.Supplier;
+
+final class Parser {
+    private final List<Token> tokens;
+    private final String expression;
     private int pos = 0;
 
-    Parser(List<Token> tokens) { this.tokens = tokens; }
-
-    private Token current() { return tokens.get(pos); }
-    private void advance() { pos++; }
-    
-    private boolean match(TokenType... types) {
-        for (TokenType t : types) 
-            if (current().type == t) return true;
-        return false;
+    Parser(List<Token> tokens, String expression) {
+        this.tokens = tokens;
+        this.expression = expression;
     }
 
-    private void expect(TokenType type) {
-        if (current().type != type)
-            throw new RuntimeException("Expected " + type + " but found " + current().type);
-        advance();
-    }
-
-    public Node parse() {
+    Node parse() {
         Node ast = parseOr();
         expect(TokenType.EOF);
         return ast;
     }
 
-    // Helper for binary operators with precedence
-    private Node parseBinary(java.util.function.Supplier<Node> next, TokenType... ops) {
-        Node left = next.get();
-        while (match(ops)) {
-            String op = current().value;
-            advance();
-            left = new BinaryOpNode(op, left, next.get());
-        }
-        return left;
+    private Node parseOr() {
+        return parseBinary(this::parseAnd, TokenType.OR);
     }
 
-    // Operator precedence: OR (lowest) → AND → NOT (highest)
-    private Node parseOr()  { return parseBinary(this::parseAnd, TokenType.OR); }
-    private Node parseAnd() { return parseBinary(this::parseNot, TokenType.AND); }
+    private Node parseAnd() {
+        return parseBinary(this::parseNot, TokenType.AND);
+    }
 
     private Node parseNot() {
         if (match(TokenType.NOT)) {
+            Token token = current();
             advance();
-            return new UnaryOpNode("NOT", parseNot());
+            return new UnaryOpNode(token.value, parseNot());
         }
+
         return parsePrimary();
     }
 
@@ -437,457 +422,477 @@ class Parser {
             advance();
             return new VariableNode(name);
         }
+
         if (match(TokenType.LPAREN)) {
             advance();
-            Node expr = parseOr();
+            Node node = parseOr();
             expect(TokenType.RPAREN);
-            return expr;
+            return node;
         }
-        throw new RuntimeException("Unexpected token: " + current().type);
+
+        Token token = current();
+        throw new ExpressionParseException(
+                "Expected variable or '(' but found " + token.type,
+                token.position,
+                expression
+        );
+    }
+
+    private Node parseBinary(Supplier<Node> nextPrecedence, TokenType operatorType) {
+        Node left = nextPrecedence.get();
+
+        while (match(operatorType)) {
+            String operator = current().value;
+            advance();
+
+            Node right = nextPrecedence.get();
+            left = new BinaryOpNode(operator, left, right);
+        }
+
+        return left;
+    }
+
+    private Token current() {
+        return tokens.get(pos);
+    }
+
+    private boolean match(TokenType type) {
+        return current().type == type;
+    }
+
+    private void advance() {
+        pos++;
+    }
+
+    private void expect(TokenType type) {
+        if (!match(type)) {
+            Token token = current();
+
+            throw new ExpressionParseException(
+                    "Expected " + type + " but found " + token.type,
+                    token.position,
+                    expression
+            );
+        }
+
+        advance();
     }
 }
 ```
 
-**Parser features:**
-- **Operator precedence** → NOT > AND > OR (standard Boolean logic)
-- **Left-to-right association** → `A AND B AND C` = `(A AND B) AND C`
-- **Parentheses override** → `A AND (B OR C)` evaluates OR first
-- **Recursive descent** → Each precedence level calls the next higher level
+The final `expect(TokenType.EOF)` is important. Without it, the parser might accept a valid prefix and ignore trailing junk. For example, `A AND B C` should fail, not silently evaluate as `A AND B`.
 
-### 5.5. Evaluator
+### 5.6. Evaluator
 
-The evaluator walks the AST and computes the result:
+The evaluator walks the AST recursively and reads variable values from the provided map.
 
 ```java
-class Evaluator {
-    public static boolean evaluateAST(Node node, Map<String, Boolean> values) {
-        if (node instanceof VariableNode v) {
-            if (!values.containsKey(v.name))
-                throw new RuntimeException("Undefined variable: " + v.name);
-            return values.get(v.name);
+import java.util.Map;
+
+final class Evaluator {
+    private Evaluator() {
+    }
+
+    static boolean evaluateAST(Node node, Map<String, Boolean> values) {
+        if (node instanceof VariableNode variable) {
+            Boolean value = values.get(variable.name);
+
+            if (value == null) {
+                throw new IllegalArgumentException("Undefined variable: " + variable.name);
+            }
+
+            return value;
         }
-        
-        if (node instanceof BinaryOpNode b) {
-            boolean left = evaluateAST(b.left, values);
-            boolean right = evaluateAST(b.right, values);
-            return switch (b.operator) {
-                case "AND" -> left && right;
-                case "OR"  -> left || right;
-                default -> throw new RuntimeException("Unknown operator: " + b.operator);
+
+        if (node instanceof UnaryOpNode unary) {
+            if ("NOT".equals(unary.operator)) {
+                return !evaluateAST(unary.operand, values);
+            }
+
+            throw new IllegalArgumentException("Unknown unary operator: " + unary.operator);
+        }
+
+        if (node instanceof BinaryOpNode binary) {
+            return switch (binary.operator) {
+                case "AND" -> evaluateAST(binary.left, values)
+                        && evaluateAST(binary.right, values);
+
+                case "OR" -> evaluateAST(binary.left, values)
+                        || evaluateAST(binary.right, values);
+
+                default -> throw new IllegalArgumentException(
+                        "Unknown binary operator: " + binary.operator
+                );
             };
         }
-        
-        if (node instanceof UnaryOpNode u) {
-            boolean operand = evaluateAST(u.operand, values);
-            if (u.operator.equals("NOT")) return !operand;
-            throw new RuntimeException("Unknown operator: " + u.operator);
-        }
-        
-        throw new RuntimeException("Unknown node type");
+
+        throw new IllegalArgumentException("Unknown AST node: " + node.getClass().getName());
     }
 }
 ```
 
-**Evaluation logic:**
-- Recursively walks the AST from root to leaves
-- Looks up variable values from the provided map
-- Applies operators to computed sub-results
-- Fails fast on undefined variables or unknown operators
+The placement of the recursive calls matters. This implementation short-circuits correctly because the right-hand side is evaluated inside Java’s `&&` or `||` expression.
 
-### 5.6. Public API
+This means:
 
-Tie everything together with a clean public interface:
+```text
+false AND missingVariable -> false
+true OR missingVariable   -> true
+```
+
+The evaluator does not read `missingVariable` in either case. If the code first evaluated both sides into local variables, short-circuiting would be lost, and these expressions would throw.
+
+Whether this behavior is desirable depends on the system. Java developers usually expect short-circuit semantics, but a rule-management platform should still validate all referenced variables when a rule is created. That catches bad expressions before they enter production traffic.
+
+### 5.7. Public API
+
+The public API combines tokenization, parsing, and evaluation.
 
 ```java
-public class BooleanEvaluator {
+import java.util.List;
+import java.util.Map;
+
+public final class BooleanEvaluator {
+    private BooleanEvaluator() {
+    }
 
     public static boolean evaluate(String expression, Map<String, Boolean> values) {
+        if (values == null) {
+            throw new IllegalArgumentException("Values map must not be null");
+        }
+
         List<Token> tokens = Tokenizer.tokenize(expression);
-        Parser parser = new Parser(tokens);
-        Node ast = parser.parse();
+        Node ast = new Parser(tokens, expression).parse();
+
         return Evaluator.evaluateAST(ast, values);
     }
 
-    // Demo
     public static void main(String[] args) {
-        String expr = "NOT (A AND B) OR C";
-        Map<String, Boolean> vars = Map.of(
-            "A", true,
-            "B", false,
-            "C", false
+        String expression = "NOT (A AND B) OR C";
+
+        Map<String, Boolean> values = Map.of(
+                "A", true,
+                "B", false,
+                "C", false
         );
 
-        boolean result = evaluate(expr, vars);
-        System.out.println("Result: " + result); // Output: true
+        boolean result = BooleanEvaluator.evaluate(expression, values);
+        System.out.println(result);
     }
 }
 ```
 
-**Usage pattern:**
-- Single static method for simple use cases
-- Pass expression string and variable values
-- Get boolean result back
-- All complexity hidden behind clean API
+For `NOT (A AND B) OR C`, the result is `true` when `A = true`, `B = false`, and `C = false`.
 
 ## 6. Testing
 
-Comprehensive unit tests ensure correctness:
+The tests should cover operator behavior, precedence, parentheses, malformed expressions, undefined variables, and short-circuit behavior. The short-circuit tests are worth keeping because they prevent a common refactor bug.
 
 ```java
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.*;
 
-public class BooleanEvaluatorTest {
-
-    @Test
-    void testSimpleAnd() {
-        boolean result = BooleanEvaluator.evaluate("A AND B", 
-            Map.of("A", true, "B", true));
-        assertTrue(result);
-
-        result = BooleanEvaluator.evaluate("A AND B", 
-            Map.of("A", true, "B", false));
-        assertFalse(result);
-    }
+class BooleanEvaluatorTest {
 
     @Test
-    void testSimpleOr() {
-        boolean result = BooleanEvaluator.evaluate("A OR B", 
-            Map.of("A", false, "B", true));
-        assertTrue(result);
-
-        result = BooleanEvaluator.evaluate("A OR B", 
-            Map.of("A", false, "B", false));
-        assertFalse(result);
-    }
-
-    @Test
-    void testNotOperator() {
-        boolean result = BooleanEvaluator.evaluate("NOT A", 
-            Map.of("A", false));
-        assertTrue(result);
-
-        result = BooleanEvaluator.evaluate("NOT A", 
-            Map.of("A", true));
-        assertFalse(result);
-    }
-
-    @Test
-    void testParenthesesAndPrecedence() {
-        // (A AND B) OR C → (true && false) || true = true
-        boolean result = BooleanEvaluator.evaluate("(A AND B) OR C",
-            Map.of("A", true, "B", false, "C", true));
-        assertTrue(result);
-
-        // A AND (B OR C) → true && (false || false) = false
-        result = BooleanEvaluator.evaluate("A AND (B OR C)",
-            Map.of("A", true, "B", false, "C", false));
-        assertFalse(result);
-    }
-
-    @Test
-    void testNestedNot() {
-        // NOT (NOT A) → same as A
-        boolean result = BooleanEvaluator.evaluate("NOT (NOT A)",
-            Map.of("A", true));
-        assertTrue(result);
-    }
-
-    @Test
-    void testComplexExpression() {
-        // (A AND (NOT B)) OR (C AND (NOT (D OR E)))
-        String expr = "(A AND (NOT B)) OR (C AND (NOT (D OR E)))";
-
-        boolean result = BooleanEvaluator.evaluate(expr, Map.of(
-            "A", true, "B", false, "C", false, "D", false, "E", false
+    void evaluatesAnd() {
+        assertTrue(BooleanEvaluator.evaluate(
+                "A AND B",
+                Map.of("A", true, "B", true)
         ));
-        assertTrue(result);
 
-        result = BooleanEvaluator.evaluate(expr, Map.of(
-            "A", false, "B", false, "C", true, "D", true, "E", false
+        assertFalse(BooleanEvaluator.evaluate(
+                "A AND B",
+                Map.of("A", true, "B", false)
         ));
-        assertFalse(result);
     }
 
     @Test
-    void testUndefinedVariableThrows() {
-        Exception ex = assertThrows(RuntimeException.class, () ->
-            BooleanEvaluator.evaluate("A AND B", Map.of("A", true))
-        );
-        assertTrue(ex.getMessage().contains("Undefined variable"));
+    void evaluatesOr() {
+        assertTrue(BooleanEvaluator.evaluate(
+                "A OR B",
+                Map.of("A", false, "B", true)
+        ));
+
+        assertFalse(BooleanEvaluator.evaluate(
+                "A OR B",
+                Map.of("A", false, "B", false)
+        ));
     }
 
     @Test
-    void testInvalidCharacterThrows() {
-        Exception ex = assertThrows(RuntimeException.class, () ->
-            BooleanEvaluator.evaluate("A & B", Map.of("A", true, "B", false))
+    void evaluatesNot() {
+        assertTrue(BooleanEvaluator.evaluate(
+                "NOT A",
+                Map.of("A", false)
+        ));
+
+        assertFalse(BooleanEvaluator.evaluate(
+                "NOT A",
+                Map.of("A", true)
+        ));
+    }
+
+    @Test
+    void respectsPrecedence() {
+        assertTrue(BooleanEvaluator.evaluate(
+                "A OR B AND C",
+                Map.of("A", true, "B", false, "C", false)
+        ));
+
+        assertFalse(BooleanEvaluator.evaluate(
+                "A AND B OR C",
+                Map.of("A", true, "B", false, "C", false)
+        ));
+    }
+
+    @Test
+    void respectsParentheses() {
+        assertFalse(BooleanEvaluator.evaluate(
+                "A AND (B OR C)",
+                Map.of("A", true, "B", false, "C", false)
+        ));
+
+        assertTrue(BooleanEvaluator.evaluate(
+                "(A AND B) OR C",
+                Map.of("A", true, "B", false, "C", true)
+        ));
+    }
+
+    @Test
+    void evaluatesNestedExpression() {
+        String expression = "(A AND (NOT B)) OR (C AND (NOT (D OR E)))";
+
+        assertTrue(BooleanEvaluator.evaluate(
+                expression,
+                Map.of(
+                        "A", true,
+                        "B", false,
+                        "C", false,
+                        "D", false,
+                        "E", false
+                )
+        ));
+
+        assertFalse(BooleanEvaluator.evaluate(
+                expression,
+                Map.of(
+                        "A", false,
+                        "B", false,
+                        "C", true,
+                        "D", true,
+                        "E", false
+                )
+        ));
+    }
+
+    @Test
+    void shortCircuitsAnd() {
+        assertFalse(BooleanEvaluator.evaluate(
+                "A AND missing",
+                Map.of("A", false)
+        ));
+    }
+
+    @Test
+    void shortCircuitsOr() {
+        assertTrue(BooleanEvaluator.evaluate(
+                "A OR missing",
+                Map.of("A", true)
+        ));
+    }
+
+    @Test
+    void throwsForUndefinedVariableWhenEvaluated() {
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> BooleanEvaluator.evaluate("A AND B", Map.of("A", true))
         );
-        assertTrue(ex.getMessage().contains("Unexpected character"));
+
+        assertTrue(exception.getMessage().contains("Undefined variable: B"));
+    }
+
+    @Test
+    void throwsForInvalidCharacter() {
+        ExpressionParseException exception = assertThrows(
+                ExpressionParseException.class,
+                () -> BooleanEvaluator.evaluate("A & B", Map.of("A", true, "B", false))
+        );
+
+        assertTrue(exception.getMessage().contains("Unexpected character"));
+    }
+
+    @Test
+    void throwsForUnclosedParenthesis() {
+        ExpressionParseException exception = assertThrows(
+                ExpressionParseException.class,
+                () -> BooleanEvaluator.evaluate(
+                        "A AND (B OR C",
+                        Map.of("A", true, "B", false, "C", true)
+                )
+        );
+
+        assertTrue(exception.getMessage().contains("Expected RPAREN"));
     }
 }
 ```
 
-**Test coverage:**
-- Basic operators (AND, OR, NOT)
-- Parentheses and precedence
-- Nested expressions
-- Error cases (undefined variables, invalid syntax)
-- Complex real-world scenarios
+These tests are not exhaustive, but they cover the areas most likely to break during maintenance. If this evaluator becomes part of a critical path, add randomized tests that generate expression trees, render them into strings, parse them back, and compare parsed evaluation against direct tree evaluation.
 
-## 7. Performance Considerations
+## 7. Performance
 
-### 7.1. Parse Once, Evaluate Many
+The evaluator has predictable complexity.
 
-For frequently-used rules, cache the parsed AST:
+| Stage             | Complexity | Notes                          |
+| ----------------- | ---------: | ------------------------------ |
+| Tokenization      |     `O(n)` | Scans each character once      |
+| Parsing           |     `O(t)` | Consumes each token once       |
+| Evaluation        |     `O(k)` | Visits evaluated AST nodes     |
+| Cached evaluation |     `O(k)` | Skips tokenization and parsing |
+
+For typical business expressions, parsing usually costs more than evaluation. Evaluation is just a tree walk plus map lookups, and with short-circuiting it may visit only part of the tree.
+
+If the same expression runs many times, cache the parsed AST.
 
 ```java
-public class CachedEvaluator {
-    private final Map<String, Node> astCache = new ConcurrentHashMap<>();
-    
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+public final class CachedBooleanEvaluator {
+    private final ConcurrentMap<String, Node> astCache = new ConcurrentHashMap<>();
+
     public boolean evaluate(String expression, Map<String, Boolean> values) {
-        Node ast = astCache.computeIfAbsent(expression, expr -> {
-            List<Token> tokens = Tokenizer.tokenize(expr);
-            return new Parser(tokens).parse();
-        });
+        Node ast = astCache.computeIfAbsent(expression, this::parse);
         return Evaluator.evaluateAST(ast, values);
     }
-}
-```
 
-**Benefits:**
-- Parsing happens only once per unique expression
-- Subsequent evaluations are just tree traversal
-- Thread-safe with `ConcurrentHashMap`
-
-### 7.2. Short-Circuit Evaluation
-
-The current implementation naturally short-circuits:
-
-```java
-// In BinaryOpNode evaluation:
-boolean left = evaluateAST(b.left, values);
-boolean right = evaluateAST(b.right, values);
-return b.operator.equals("AND") ? left && right : left || right;
-```
-
-Java's `&&` and `||` operators are short-circuit:
-- `false AND <anything>` → doesn't evaluate right side
-- `true OR <anything>` → doesn't evaluate right side
-
-### 7.3. Benchmarking
-
-Expected performance characteristics:
-
-| Operation | Time Complexity | Notes |
-|-----------|----------------|-------|
-| Tokenization | O(n) | n = expression length |
-| Parsing | O(n) | Recursive descent |
-| Evaluation | O(nodes) | AST traversal |
-| Cached eval | O(nodes) | Skip tokenize + parse |
-
-For typical business rules (10-20 variables), evaluation takes **microseconds**.
-
-## 8. Extensions and Improvements
-
-### 8.1. Add Comparison Operators
-
-Support `age > 18` and `score >= 90`:
-
-```java
-// Add to TokenType
-enum TokenType {
-    VARIABLE, NUMBER, GT, GTE, LT, LTE, EQ, NEQ, 
-    AND, OR, NOT, LPAREN, RPAREN, EOF
-}
-
-// Add ComparisonNode
-class ComparisonNode extends Node {
-    String operator;
-    Node left, right;
-}
-
-// Modify evaluator to handle comparisons
-if (node instanceof ComparisonNode c) {
-    int left = evaluateNumeric(c.left, values);
-    int right = evaluateNumeric(c.right, values);
-    return switch (c.operator) {
-        case ">" -> left > right;
-        case ">=" -> left >= right;
-        case "<" -> left < right;
-        case "<=" -> left <= right;
-        default -> throw new RuntimeException("Unknown operator");
-    };
-}
-```
-
-### 8.2. Support Functions
-
-Add built-in functions like `IN` and `CONTAINS`:
-
-```java
-// Expression: "region IN [US, CA, UK]"
-// Expression: "email CONTAINS @company.com"
-
-class FunctionNode extends Node {
-    String functionName;
-    List<Node> arguments;
-}
-```
-
-### 8.3. Add Variables from Objects
-
-Instead of manually building the context map, use reflection:
-
-```java
-public Map<String, Boolean> buildContext(User user) {
-    Map<String, Boolean> context = new HashMap<>();
-    context.put("isActive", user.isActive());
-    context.put("isPremium", user.isPremium());
-    context.put("age_gte_18", user.getAge() >= 18);
-    return context;
-}
-```
-
-Or use a library-like approach with property paths:
-
-```java
-// Expression: "user.isActive AND user.age >= 18"
-```
-
-### 8.4. Better Error Messages
-
-Enhance error reporting with position information:
-
-```java
-class ParseException extends RuntimeException {
-    int position;
-    String expression;
-    
-    ParseException(String message, int position, String expression) {
-        super(message + " at position " + position + "\n" + 
-              expression + "\n" + " ".repeat(position) + "^");
+    private Node parse(String expression) {
+        List<Token> tokens = Tokenizer.tokenize(expression);
+        return new Parser(tokens, expression).parse();
     }
 }
 ```
 
-## 9. Production Considerations
+A raw `ConcurrentHashMap` is fine for a demo, but it is not enough for production. If expressions can be created dynamically, an unbounded cache can become a memory leak. Use a bounded cache, record hit rate and eviction count, and validate expressions before they reach the hot path.
 
-### 9.1. Security
+Context construction can also dominate runtime. If building the map requires database calls, remote service calls, or expensive computation, optimizing the AST traversal will not fix latency. In that case, either precompute facts upstream or consider lazy variables through `Supplier<Boolean>`, with care around timeouts, retries, and side effects.
 
-**Validate expressions before evaluation:**
-- Limit expression length (e.g., max 1000 characters)
-- Restrict allowed variable names (whitelist approach)
-- Set evaluation timeout to prevent infinite loops
-- Sandbox the evaluation environment
+## 8. Production Guardrails
+
+A runtime expression evaluator should reject bad rules before they affect requests. The validator should enforce size limits, syntax validity, allowed variables, and any domain-specific restrictions.
 
 ```java
-public boolean evaluate(String expression, Map<String, Boolean> values) {
-    if (expression.length() > 1000) {
-        throw new IllegalArgumentException("Expression too long");
-    }
-    
-    // Validate variable names against whitelist
-    Set<String> allowedVariables = Set.of("isActive", "isPremium", ...);
-    validateVariables(expression, allowedVariables);
-    
-    return BooleanEvaluator.evaluate(expression, values);
-}
-```
+import java.util.List;
+import java.util.Set;
 
-### 9.2. Monitoring
+public final class RuleValidator {
+    private static final int MAX_EXPRESSION_LENGTH = 1_000;
+    private static final int MAX_TOKEN_COUNT = 200;
 
-Track expression evaluation performance:
-
-```java
-public boolean evaluate(String expression, Map<String, Boolean> values) {
-    long start = System.nanoTime();
-    try {
-        return BooleanEvaluator.evaluate(expression, values);
-    } finally {
-        long duration = System.nanoTime() - start;
-        metrics.recordEvaluationTime(duration);
-        if (duration > THRESHOLD) {
-            logger.warn("Slow expression: {} took {}ms", expression, duration / 1_000_000);
+    public void validate(String expression, Set<String> allowedVariables) {
+        if (expression == null || expression.isBlank()) {
+            throw new IllegalArgumentException("Expression must not be blank");
         }
+
+        if (expression.length() > MAX_EXPRESSION_LENGTH) {
+            throw new IllegalArgumentException("Expression is too long");
+        }
+
+        List<Token> tokens = Tokenizer.tokenize(expression);
+
+        if (tokens.size() > MAX_TOKEN_COUNT) {
+            throw new IllegalArgumentException("Expression has too many tokens");
+        }
+
+        Node ast = new Parser(tokens, expression).parse();
+        validateVariables(ast, allowedVariables);
+    }
+
+    private void validateVariables(Node node, Set<String> allowedVariables) {
+        if (node instanceof VariableNode variable) {
+            if (!allowedVariables.contains(variable.name)) {
+                throw new IllegalArgumentException("Variable is not allowed: " + variable.name);
+            }
+
+            return;
+        }
+
+        if (node instanceof UnaryOpNode unary) {
+            validateVariables(unary.operand, allowedVariables);
+            return;
+        }
+
+        if (node instanceof BinaryOpNode binary) {
+            validateVariables(binary.left, allowedVariables);
+            validateVariables(binary.right, allowedVariables);
+            return;
+        }
+
+        throw new IllegalArgumentException("Unknown AST node: " + node.getClass().getName());
     }
 }
 ```
 
-### 9.3. Versioning
+The production concerns are mostly operational rather than algorithmic:
 
-When rules change, maintain history:
+* reject expressions that are too long or too deeply nested
+* validate variable names against a rule-specific catalog
+* store rule versions instead of mutating rules in place
+* support rollback to the previous active version
+* log rule ID, version, result, and correlation ID
+* record evaluation latency, validation failures, and cache behavior
+* test new rules against historical samples before activation
 
-```java
-@Entity
-public class Rule {
-    private String customerId;
-    private String expression;
-    private int version;
-    private LocalDateTime createdAt;
-    private String createdBy;
-}
+For high-impact decisions, evaluate candidate rules in shadow mode before serving them. The active rule still controls the response, while the candidate rule runs in parallel and emits disagreement metrics. This catches accidental broadening or narrowing before a bad policy starts rejecting users, changing prices, or granting access.
+
+## 9. Extending the Language
+
+The first common extension is comparison syntax.
+
+```text
+age >= 18 AND region == "US"
 ```
 
-**Benefits:**
-- Audit trail for compliance
-- Ability to rollback bad rules
-- A/B testing different versions
+That looks small, but it changes the evaluator substantially. The tokenizer must support numbers, strings, and multi-character operators. The parser needs additional precedence levels. The evaluator needs typed values, not only Booleans. Error handling must distinguish syntax errors from type errors.
 
-### 9.4. UI for Non-Developers
+A larger grammar might look like this:
 
-Build a rule builder interface:
-- Dropdown for variable selection
-- Visual operator buttons (AND, OR, NOT)
-- Parentheses grouping with drag-and-drop
-- Real-time validation and preview
+```text
+expression    := orExpression
+orExpression  := andExpression ("OR" andExpression)*
+andExpression := notExpression ("AND" notExpression)*
+notExpression := "NOT" notExpression | comparison
+comparison    := value ((">" | ">=" | "<" | "<=" | "==" | "!=") value)?
+value         := VARIABLE | NUMBER | STRING | "(" expression ")"
+```
 
-Example UI workflow:
-1. User selects variable `isActive` from dropdown
-2. Clicks "AND" button
-3. Selects variable `isPremium`
-4. System generates: `isActive AND isPremium`
-5. Preview shows which users match the rule
+At that point, the implementation is becoming a small interpreter. That can still be the right path, especially when the domain requires a constrained language, but it should trigger a build-versus-adopt discussion. Mature expression languages already handle typed values, functions, better diagnostics, and optimization, although they also bring their own security and integration risks.
 
-## 10. Comparison Summary
+## 10. When to Use This Pattern
 
-| Aspect | If-Else Approach | Expression Evaluator |
-|--------|------------------|---------------------|
-| **Complexity** | Simple for < 5 rules | Worth it for 10+ rules |
-| **Deployment** | Required for changes | Not required |
-| **Who can change** | Developers only | Business users via UI |
-| **Testability** | Hard with many branches | Each rule independent |
-| **Maintainability** | Becomes spaghetti | Rules as data |
-| **Flexibility** | Very rigid | Highly flexible |
-| **Performance** | Slightly faster | Microseconds slower |
-| **Auditability** | Code commits | Database versioning |
-| **Multi-tenancy** | One rule for all | Custom per tenant |
+Use normal Java when the rule is simple, stable, and owned by engineers. Hardcoded logic gives strong tooling, compile-time feedback, and predictable performance.
+
+Use a Boolean expression evaluator when the rule is complex enough to need configuration, when tenants need different policies, when rules must be audited, or when the organization needs to change policy faster than the application deployment cycle. The evaluator adds parsing and validation complexity, but it localizes that complexity in one component instead of spreading rule variants across the codebase.
+
+The main design principle is to keep the language small for as long as possible. A Boolean evaluator with well-defined variables is easy to secure and reason about. A general-purpose scripting system embedded in a request path is much harder to operate safely.
 
 ## 11. Key Takeaways
 
-**When business logic is simple** → stick with if-else. Don't over-engineer.
+A Boolean expression evaluator is a focused interpreter. The tokenizer converts text into tokens, the parser builds an AST, and the evaluator computes a result from request-specific values.
 
-**When complexity grows** → expression evaluators become essential. They enable:
-- Non-developers to manage business rules
-- Rule changes without code deployment
-- Multi-tenant customization
-- Better separation of concerns
+The important implementation details are practical:
 
-**The implementation** → three clean components:
-- **Tokenizer** → string to tokens
-- **Parser** → tokens to AST
-- **Evaluator** → AST to result
+* parse the entire expression, including the EOF marker
+* preserve positions for useful error messages
+* make operator precedence explicit in the parser
+* keep AST nodes immutable if they are cached
+* implement short-circuiting by evaluating the right side only inside `&&` or `||`
+* validate allowed variables before activating a rule
+* bound caches and expression size in production
 
-**Production-ready features:**
-- Caching parsed ASTs for performance
-- Validation and security checks
-- Monitoring and metrics
-- Rule versioning and audit trails
-
-This pattern is widely used in:
-- Feature flag systems (LaunchDarkly, Unleash)
-- Access control (authorization rules)
-- Business rule engines (Drools alternatives)
-- Dynamic pricing and recommendations
-
-The code shown here is production-quality and can handle complex real-world scenarios. Start simple, add features as needed.
+This pattern does not remove business-rule complexity. It moves that complexity into a smaller, testable, observable layer where rule changes can be treated as data changes rather than application releases.
