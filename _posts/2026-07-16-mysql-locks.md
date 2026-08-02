@@ -9,9 +9,9 @@ tags:
   - Database
 ---
 
-## Introduction
+Below are some notes on MySQL Locks concepts, I will not go into the very details underneath and cover every single lock type, but I will give you a quick overview of the most common locks and how they work.
 
-In this post, we will explore some lock concepts in MySQL, I will not go into the very details underneath and cover every single lock type, but I will give you a quick overview of the most common locks and how they work.
+{% include toc %}
 
 ## Exclusive Locks (X) and Shared Locks (S)
 
