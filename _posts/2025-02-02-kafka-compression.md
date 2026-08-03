@@ -13,15 +13,16 @@ This article explains how Kafka message compression works, its configuration, an
 
 ## Introduction
 
-- Kafka producer data compression works by **batching data going to the same partition** before applying compression.
+Kafka producer data compression works by **batching data going to the same partition** before applying compression.
 
-  - Batching: Kafka producers group records destined **for the same partition** into record batches, then compress each batch as a unit.
-  - Compression Type: The chosen compression algorithm (e.g., Snappy, Gzip) affects performance.
-  - Decompression: Brokers usually store producer-compressed batches using the original codec. They may decompress or recompress batches during validation, log compaction, message-format conversion, or when the broker/topic configuration enforces another compression codec.
+- Batching: Kafka producers group records destined **for the same partition** into record batches, then compress each batch as a unit.
+- Compression Type: The chosen compression algorithm (e.g., Snappy, Gzip) affects performance.
+- Decompression: Brokers usually store producer-compressed batches using the original codec. They may decompress or recompress batches during validation, log compaction, message-format conversion, or when the broker/topic configuration enforces another compression codec.
 
-- Batch size trade off:
-  - Small Batch Size: Saves memory, reduces latency (good for low-throughput, low-latency scenarios).
-  - Large Batch Size: Increases throughput, but consumes more memory (good for high-throughput scenarios).
+Batch size trade off:
+
+- Small Batch Size: Saves memory, reduces latency (good for low-throughput, low-latency scenarios).
+- Large Batch Size: Increases throughput, but consumes more memory (good for high-throughput scenarios).
 
 ## Compression Types
 
@@ -29,10 +30,10 @@ This article explains how Kafka message compression works, its configuration, an
 
 ## Kafka Producer Configuration
 
-- `compression.type`: The compression algorithm to use.
-- `batch.size`: The maximum size of a batch before compression.
-- `linger.ms`: The time to wait for more messages before sending a batch.
-- `max.request.size`: The maximum producer request size. A request may contain multiple partition batches, and this setting also effectively limits the maximum uncompressed record-batch size.
+`compression.type`: The compression algorithm to use.
+`batch.size`: The maximum size of a batch before compression.
+`linger.ms`: The time to wait for more messages before sending a batch.
+`max.request.size`: The maximum producer request size. A request may contain multiple partition batches, and this setting also effectively limits the maximum uncompressed record-batch size.
 
 ## Kafka consumers: Handling mixed data dynamics
 
@@ -68,12 +69,12 @@ Record C → offsetDelta = 2
 lastOffsetDelta = 2
 ```
 
-How offset is assigned per batch?
+**How offset is assigned per batch?**
 
 - Broker assigns a base offset to the batch (e.g, 100)
 - Each record gets an offset = baseOffset + offsetDelta
 
-How batch is stored in broker?
+**How batch is stored in broker?**
 
 - Broker stores the batch as a single compressed unit with metadata
 - Offsets are logical and preserved via baseOffset
