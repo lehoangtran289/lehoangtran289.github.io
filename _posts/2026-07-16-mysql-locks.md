@@ -44,6 +44,14 @@ Intention Lock is a table-level lock that indicates a transaction's intention to
 
 Intention locks **do not lock the whole table**, but they mark that there exists a transaction that wants to lock rows in this table. This allows further transactions to know that they cannot acquire conflicting locks on the table without having to check every row, which improves efficiency.
 
+### Why Intention Locks are Needed
+
+Simply put, an intention lock isn't used to lock the new row; it is used to ask permission to enter the neighborhood and to provide a structured way to wait in line if the neighborhood is currently blocked.
+
+For example, when a transaction wants to insert the number `5` into a gap between `4` and `7`: The row `5` does not exist yet. Since an exclusive lock (X) is a record lock (meaning it must be physically attached to and existing slot or key in the index tree), there is **no physical data structure for an exclusive lock to latch onto** yet. Therefore, MySQL must lock the gap `(4, 7)` instead.
+
+==> Hence The insert intention lock acts as the placeholder on the gap until the physical row is created. And it allows other transactions to insert into the same gap concurrently, as long as they are not trying to insert the same value.
+
 ### Lock Compatibility
 
 | | X | IX | S | IS |
