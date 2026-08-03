@@ -54,11 +54,11 @@ Below are some notes on Kafka best practices that I found useful while working w
 
 ### Critical configs
 
-- Batch.size (size based batching)
-- Linger.ms (time based batching)
-- Compression.type
-- Max.in.flight.requests.per.connection (affects ordering)
-- Acks (affects durability)
+- `batch.size` (size based batching)
+- `linger.ms` (time based batching)
+- `compression.type`
+- `max.in.flight.requests.per.connection` (affects ordering)
+- `acks` (affects durability)
 
 ### Performance notes
 
@@ -89,12 +89,12 @@ Below are some notes on Kafka best practices that I found useful while working w
 
 - **Batch Grouping:** Groups batches based on the leader broker then sends the grouped batches to the brokers.
 
-- **Pipelining**: If max.in.flight.requests.per.connection > 1, requests are pipelined.
+- **Pipelining**: If `max.in.flight.requests.per.connection` > 1, requests are pipelined.
 
 - **Batch Readiness:** A batch is ready to send when:
 
-  - Batch.size is reached.
-  - Linger.ms is reached.
+  - `batch.size` is reached.
+  - `linger.ms` is reached.
   - Another batch to the same broker is ready.
   - flush() or close() is called.
 
@@ -105,6 +105,8 @@ Below are some notes on Kafka best practices that I found useful while working w
 ### Compression.type
 
 - Compression is in user thread, so adding more threads helps with the throughput if compression is slow
+
+![Compression Types]({{ site.baseurl }}/images/blogs/compression.png)
 
 ### ACKs
 

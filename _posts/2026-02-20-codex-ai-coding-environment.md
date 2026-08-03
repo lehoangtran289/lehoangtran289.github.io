@@ -1,5 +1,6 @@
 ---
 title: "Setting Up an AI Coding Environment with Codex"
+published: false
 layout: single
 date: 2026-02-20
 permalink: /posts/codex-ai-coding-environment/
