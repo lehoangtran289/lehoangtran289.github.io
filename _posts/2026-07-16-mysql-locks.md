@@ -69,7 +69,7 @@ Note: record locks always lock index records, even if table has no index. InnoDB
 
 ## Gap Locks
 
-Gap lock is a lock on the **gap between index records**. Its main GOAL is to **prevent insertion** of new rows into the gap range -> preventing **phantom reads**.
+Gap lock is a lock on the **gap between index records**. Its main GOAL is to **prevent insertion** of new rows into the gap range -> preventing **PHANTOM READ**.
 
 ![gap-lock]({{ site.baseurl }}/images/blogs/mysqllock/gap-lock.png)
 
@@ -102,7 +102,9 @@ MySQL performs row-level locking on index records it scans through.
 
 Example: given index contains 5, 9, 10, and 20. Possible next-key locks cover the following ranges: `(-inf, 5]`, `(5, 9]`, `(9, 10]`, `(10, 20]`, and `(20, +inf)`. Query `SELECT ... WHERE id > 10 FOR UPDATE` will acquire next-key locks on `(10, 20]` and `(20, +inf)`.
 
-## A quick example
+## Examples
+
+### Example 1: Unique Index vs Non-Unique Index
 
 Assume an InnoDB index (`REPEATABLE READ`) contains: `10, 20, 30, 50`
 
@@ -118,8 +120,6 @@ Assume an InnoDB index (`REPEATABLE READ`) contains: `10, 20, 30, 50`
     - Block **Update locked record:** `UPDATE ... WHERE age = 30;`
     - Block **Move into gap:** `UPDATE ... SET age = 25 WHERE age = 10;`
 
-### Important conditions
-
 Conditions for using next-key locks:
 
 - The table uses **InnoDB** and isolation level is **`REPEATABLE READ`**.
@@ -129,7 +129,7 @@ Conditions for using next-key locks:
 
 A plain `SELECT` normally uses an MVCC snapshot (I will cover this in another topic about MySQL's isolation level) and does not acquire these locks. An exact lookup using a complete unique index usually acquires only a record lock.
 
-## Full Table Scan and Locks
+### Example 2: Full Table Scan and Locks
 
 Assume a table with index on column `address` but not `nickname`. The table definition is as follows:
 
@@ -141,6 +141,25 @@ Assume a table with index on column `address` but not `nickname`. The table defi
 What happens if the table does not have an index? In this case, the `UPDATE` operation is performed by **full scanning** the table, and locks are set **on all table records**.
 
 ==> So index could affect not only query performance but also concurrency performance, and must be designed well to avoid unnecessary locks.
+
+### Example 3: How INSERT works with locks
+
+Assume application performs multiple `INSERT` operations simultaneously with the same PK value. For example, two transactions try to insert a row with `id=10` at the same time:
+
+```sql
+--- TX1
+INSERT INTO users(id) VALUES (10);
+
+--- TX2
+INSERT INTO users(id) VALUES (10);
+```
+
+Locks Acquired by `INSERT`:
+
+- an **insert-intention lock** on the target index gap ==> allows other transactions to insert into the same gap concurrently
+- an **exclusive record lock** (X) on the inserted row
+
+So, without loss of generality, assume `T1` inserts the row and holds an exclusive lock (X) on `id = 10`. Hence `T2` must wait, and when `T1` commits, `T2` will try to insert the same row but fails because of **duplicate key error**.
 
 ## References
 
