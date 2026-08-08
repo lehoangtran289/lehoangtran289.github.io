@@ -20,7 +20,7 @@ A distributed, fault-tolerant message queue built from scratch in Go, inspired b
 
 ---
 
-## [Java Single Flight](https://github.com/lehoangtran289/singleflight) *(In Progress)*
+## [Java Single Flight](https://github.com/lehoangtran289/singleflight)
 
 A Java library implementing duplicate suppression (single-flight), similar to Go's `singleflight` package.
 
