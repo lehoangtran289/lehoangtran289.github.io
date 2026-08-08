@@ -2,50 +2,13 @@
    Various functions that we want to use within the template
    ========================================================================== */
 
-// Determine the expected state of the theme toggle, which can be "dark" or "light".
-// Default is "light".
-let determineThemeSetting = () => {
-  let themeSetting = localStorage.getItem("theme");
-  return themeSetting === "dark" ? "dark" : "light";
-};
-
-// Determine the computed theme, which can be "dark" or "light".
-let determineComputedTheme = (themeSetting = determineThemeSetting()) => themeSetting;
-
-// Set the theme on page load or when explicitly called
-let setTheme = (theme) => {
-  const requestedTheme =
-    theme ||
-    localStorage.getItem("theme") ||
-    $("html").attr("data-theme") ||
-    "light";
-  const use_theme = determineComputedTheme(requestedTheme);
-
-  if (use_theme === "dark") {
-    $("html").attr("data-theme", "dark");
-    $("#theme-icon").removeClass("fa-sun").addClass("fa-moon");
-  } else if (use_theme === "light") {
-    $("html").removeAttr("data-theme");
-    $("#theme-icon").removeClass("fa-moon").addClass("fa-sun");
-  }
-};
-
-// Toggle the theme manually
-var toggleTheme = () => {
-  const current_theme = $("html").attr("data-theme");
-  const new_theme = current_theme === "dark" ? "light" : "dark";
-  localStorage.setItem("theme", new_theme);
-  setTheme(new_theme);
-};
-
 /* ==========================================================================
    Plotly integration script so that Markdown codeblocks will be rendered
    ========================================================================== */
 
-// Read the Plotly data from the code block, hide it, and render the chart as new node. This allows for the 
-// JSON data to be retrieve when the theme is switched. The listener should only be added if the data is 
-// actually present on the page.
-import { plotlyDarkLayout, plotlyLightLayout } from './theme.js';
+// Read the Plotly data from the code block, hide it, and render the chart as a new node.
+// The listener should only be added if the data is actually present on the page.
+import { plotlyLightLayout } from './theme.js';
 let plotlyElements = document.querySelectorAll("pre>code.language-plotly");
 if (plotlyElements.length > 0) {
   document.addEventListener("readystatechange", () => {
@@ -60,11 +23,10 @@ if (plotlyElements.length > 0) {
         elem.parentElement.after(chartElement);
 
         // Set the theme for the plot and render it
-        const theme = (determineComputedTheme() === "dark") ? plotlyDarkLayout : plotlyLightLayout;
         if (jsonData.layout) {
-          jsonData.layout.template = (jsonData.layout.template) ? { ...theme, ...jsonData.layout.template } : theme;
+          jsonData.layout.template = (jsonData.layout.template) ? { ...plotlyLightLayout, ...jsonData.layout.template } : plotlyLightLayout;
         } else {
-          jsonData.layout = { template: theme };
+          jsonData.layout = { template: plotlyLightLayout };
         }
         Plotly.react(chartElement, jsonData.data, jsonData.layout);
       });
@@ -80,12 +42,6 @@ $(document).ready(function () {
   // SCSS SETTINGS - These should be the same as the settings in the relevant files 
   const scssLarge = 925;          // pixels, from /_sass/_themes.scss
   const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
-
-  // Default to light unless the user explicitly chose dark.
-  setTheme();
-
-  // Enable the theme toggle
-  $('#theme-toggle').on('click', toggleTheme);
 
   // Enable the sticky footer
   var bumpIt = function () {
