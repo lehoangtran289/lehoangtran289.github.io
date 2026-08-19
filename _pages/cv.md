@@ -13,7 +13,7 @@ redirect_from:
 
 ---
 
-[View my resume (PDF)]({{ base_path }}/files/Resume_LeHoangTran.pdf)
+[View my resume (PDF)]({{ base_path }}/files/SWE_Resume_LeHoangTran.pdf)
 
 ---
 
@@ -30,37 +30,33 @@ redirect_from:
 
 ## Work experience
 
-<!-- ### **[LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Backend Software Engineer**  
+### **[LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Backend Software Engineer**  
 
-*Hanoi, Vietnam \| July 2025 – August 2025*
+*Hanoi, Vietnam \| Jun 2025 – Aug 2025*
 
-- Researched and proposed a **fault-tolerant online data migration** solution for 10TB+ data from MySQL + Cassandra to a unified MySQL architecture using dual-write and backfill strategy.
-- Leveraged **AI-assisted development tools** for source code onboarding, automated unit/integration tests, and early-stage code review, increasing development velocity. -->
+- Implemented an **online data migration solution** for **10TB+** of data from LINE and Yahoo systems to a unified MySQL database using dual-write and backfill strategy.
+- Leveraged AI-assisted development tools and prompt engineering for source code onboarding, automated unit & integration tests, and early-stage code review, increasing development velocity.
 
 ### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
 
 *Hanoi, Vietnam \| May 2021 – Jun 2025*  
 
 - **Customer Engagement Platform** \| *2023 - 2025*
-  - Designed and implemented an **in-house marketing platform** supporting personalized campaigns through push notifications, in-app messaging, and rewards distribution, processing **100M+ events daily**.
+  - Architected an **in-house marketing platform** to deliver personalized campaigns through push notifications, in-app messaging, and rewards distribution, processing **100M+** events daily.
   - Increased user segmentation creation throughput from **500 to 35,000 QPS** while **reducing p95 latency by 80%** by introducing a **Roaring Bitmap-based solution** and multi-layer caching.
-  - Engineered a **Camunda-based workflow orchestration module**, enabling operations teams to independently configure and manage **200+ single- and multi-step marketing workflows per month**.
-  - **Led a team of 4 backend engineers** through sprint planning, system design, and peer code reviews, supporting agile delivery of features for evolving product requirements.
-  - Owned end-to-end system observability using **Grafana**, identifying performance bottlenecks and improving reliability through configuration tuning, caching strategies, and microservices refactoring.
+  - Engineered a Camunda-based workflow orchestration module, enabling operations teams to configure and manage **200+** single- and multi-step marketing workflows per month.
+  - **Led 4 backend engineers** through sprint planning, system design, and peer code reviews.
+  - Owned end-to-end system observability using Grafana, identifying performance bottlenecks and improving reliability through configuration tuning, caching strategies, and microservice patterns.
 
 - **Data Tracking System** \| *2022 - 2023*
-  - Designed and delivered a high-throughput **in-house event tracking system** for mobile and web platforms, processing **150M+ events daily** and replacing a third-party tracking provider to **reduce licensing costs**.
-  - Implemented an online tracking rule configuration module supporting **3,000+ dynamic rules**, reducing event validation latency by **30%** by replacing linear rule processing with a decision tree-based validation engine.
-  - Built non-blocking ingestion APIs using **Spring WebFlux**, supporting **1700+ RPS** on average for high-volume event ingestion while reducing request-per-thread overhead.
+  - Designed and delivered a high-throughput **in-house event tracking system** for mobile and web platforms, processing **150M+** events daily and replacing a third-party tracking provider to **reduce licensing costs**.
+  - Reduced event validation latency by 30% by replacing linear rule processing with a decision-tree validation engine, supporting **3,000+ dynamic rules** configurable online.
+  - Built non-blocking ingestion APIs using Spring WebFlux, sustaining **1,700+ RPS** on average while reducing request-per-thread overhead.
 
 - **Smart Authentication System** \| *2021 - 2022*
-  - Collaborated on the research and delivery of **Smart OTP** solution supporting **20M+ end users**, eliminating reliance on SMS OTPs, **saving over $200K annually** and enhancing authentication reliability.
+  - Collaborated on the research and delivery of a **Smart OTP** solution for **20M+ end users**, eliminating reliance on SMS OTPs and **saving over $200K/year**.
   - Implemented secure key exchange, OTP generation, and digital signature mechanisms across critical APIs, meeting internal cryptographic and security-review requirements.
-  - Hardened Android application security using native **C/JNI**, applying obfuscation and root/jailbreak/tamper detection, successfully passing enterprise-level security audits.
-
-- **User Contact System** \| *2024*
-  - Designed and implemented a backend module to collect and synchronize user contact data across multiple devices for the Viettel Money application, supporting **20M+ end users**.
-  - Optimized contact storage with Roaring Bitmap, reducing storage usage by **70%** and lowering user matching latency.
+  - Hardened Android client application using native **C/JNI**, applying obfuscation and root/jailbreak/tamper detection, successfully passing enterprise-level security audits.
 
 ---
 

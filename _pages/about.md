@@ -13,17 +13,15 @@ redirect_from:
 
 Hi there!
 
-I’m Hoang, a backend software engineer who is currently pursuing **M.S. in Computer Science** at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent **4.5 years** working at a reputable Vietnamese fintech company, delivering large-scale software systems that serve millions of users.
+I’m Hoang, a backend software engineer who is currently pursuing **M.S. in Computer Science** at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent **4.5 years** working as a backend software engineer, delivering large-scale software systems that serve millions of users.
 
-My interests include **distributed systems, scalable software design, and AI/data-driven applications** and I enjoy understanding how software systems really work internally to develop a more pragmatic engineering mindset. That's why I'm into reading about these areas, along with best practices and current AI tech trends as well.
-
-Along this journey, I also try to document and elaborate on the concepts/techniques I learn, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
+My interests include **distributed systems, scalable software design, and AI/data-driven applications**. Along this journey, I also try to document and elaborate on the concepts/techniques I learn, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
 
 Beyond work, you can find me in the gym, or out in nature wandering under the sunshine. Anyway, feel free to reach out or drop a message through my social links or email. I'm always open to connecting and discussing.
 
 ## Journey
 
 - **2025 – Present:** M.S. in Computer Science @ [George Mason University](https://cec.gmu.edu/) - Fairfax, VA, USA
-<!-- - **2025:** Backend SWE @ [LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Hanoi, Vietnam -->
+- **2025:** Backend SWE @ [LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Hanoi, Vietnam
 - **2021 – 2025:** Backend SWE @ [Viettel Digital](https://viettel.com.vn/en/) - Hanoi, Vietnam
 - **2017 - 2021:** B.S. in Information Technology (ICT) @ [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) - Hanoi, Vietnam

@@ -492,13 +492,27 @@ public class SimpleBlockingQueue<T> {
 - In computer system - “happens-before” guarantee that if one action “happens before” another action, the results must reflect that ordering
 - In Java, “happens-before” guarantee that an action performed by one thread is visible to another action in a different thread
 
+- How Threads Share Data with Each Other (Follow Code Rules to Ensure Thread Safety):
+  - **Program Order Rule**: Each action in a single thread happens-before every action in that thread that comes later in the program order.
+
+  - **Monitor Lock Rule**: An unlock action on a monitor lock happens-before every subsequent lock action on the same monitor lock (synchronized). The same applies to the Lock interface.
+
+  - **Volatile Variable Rule**: A write to a volatile variable happens-before every subsequent read of that same volatile variable. The same applies to Atomic classes.
+
+  - **Thread Start Rule**: A call to Thread.start() on a thread happens-before every action in the started thread.
+
+  - **Thread Termination Rule**: Any action in a thread happens-before any other thread successfully returns from a Thread.join() on that thread. This means all data modified by threadB will be visible to threadA once threadB.join() returns.
+
+  - **Transitivity Rule**: If action A happens-before action B, and action B happens-before action C, then action A happens-before action C.
+
+<!-- 
 - Cách các Thread chia sẻ dữ liệu với nhau (code theo để đảm bảo threadsafe):
   - **Program rule**: Hành động trong cùng một thread happens-before các hành động khác trong cùng thread.
   - **Monitor lock rule**: Hành động **unlock** happens-before trước các hành động **lock** trên cùng một monitor lock (synchronized). Tương tự cho interface Lock
   - **volatile variable rule** : Hành động thay đổi một biến volatile happens-before trước các hành động đọc biến volatile. Tương tự cho Atomic
   - **Thread start rule** : Hành động start() thread happens-before trước các hành động khác trong thread
   - **Thread terminate rule** : Tất cả hành động của thead happens-before trước hành động thread.join(). Nghĩa là tất cả dữ liệu được threadB thay đổi sẽ được threadA nhìn thấy khi hàm threadB.join() trả lại.
-  - **Transitivity rule** : A happens before B & B happens before C => A happens before C
+  - **Transitivity rule** : A happens before B & B happens before C => A happens before C -->
 
 ## 11. Java Barrier Synchronization
 
