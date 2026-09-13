@@ -24,4 +24,4 @@ Beyond work, you can find me in the gym, or out in nature wandering under the su
 - **2025 – Present:** M.S. in Computer Science @ [George Mason University](https://cec.gmu.edu/) - Fairfax, VA, USA
 - **2025:** Backend SWE @ [LINE Technology Vietnam](https://vietnamdevcenter.linecorp.com/en) - Hanoi, Vietnam
 - **2021 – 2025:** Backend SWE @ [Viettel Digital](https://viettel.com.vn/en/) - Hanoi, Vietnam
-- **2017 - 2021:** B.S. in Information Technology (ICT) @ [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) - Hanoi, Vietnam
+- **2017 - 2022:** B.S. in Information Technology (ICT) @ [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) - Hanoi, Vietnam

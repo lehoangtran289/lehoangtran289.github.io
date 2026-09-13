@@ -22,7 +22,7 @@ redirect_from:
 - [**George Mason University**](https://cec.gmu.edu/) \| M.S. in Computer Science \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
   - Current GPA: **3.86**/4.0
 
-- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| B.S. in Information Technology \| Hanoi, Vietnam \| Aug 2017 - May 2021
+- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| B.S. in Information Technology \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
   - GPA: **3.62**/4.0 \| Excellence Degree (Top 5% of cohort)
   - Excellence Scholarship Academic Award in 2021
 
@@ -45,7 +45,7 @@ redirect_from:
   - Architected an **in-house marketing platform** to deliver personalized campaigns through push notifications, in-app messaging, and rewards distribution, processing **100M+** events daily.
   - Increased user segmentation creation throughput from **500 to 35,000 QPS** while **reducing p95 latency by 80%** by introducing a **Roaring Bitmap-based solution** and multi-layer caching.
   - Engineered a Camunda-based workflow orchestration module, enabling operations teams to configure and manage **200+** single- and multi-step marketing workflows per month.
-  - **Led 4 backend engineers** through sprint planning, system design, and peer code reviews.
+  - **Led a team of 4 backend engineers** through Agile sprint planning, system design, and peer code reviews, guiding technical decisions to keep the system maintainable through rapid feature growth.
   - Owned end-to-end system observability using Grafana, identifying performance bottlenecks and improving reliability through configuration tuning, caching strategies, and microservice patterns.
 
 - **Data Tracking System** \| *2022 - 2023*
