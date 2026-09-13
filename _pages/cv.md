@@ -19,12 +19,21 @@ redirect_from:
 
 ## Education
 
-- [**George Mason University**](https://cec.gmu.edu/) \| M.S. in Computer Science \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
+- [**George Mason University**](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
+  - M.S. in Computer Science
   - Current GPA: **3.86**/4.0
 
-- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| B.S. in Information Technology \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
+- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
+  - B.S. in Information Technology, Global ICT Program
   - GPA: **3.62**/4.0 \| Excellence Degree (Top 5% of cohort)
   - Excellence Scholarship Academic Award in 2021
+
+---
+
+## Publications
+
+- [Proposed Intelligent Decision Support System using Hedge Algebra integrated with Picture Fuzzy Relations for improvement of decision making in medical diagnoses](https://doi.org/10.1007/s40815-023-01548-4)
+  - Hoang, T.L., Pham, H.V., Hung, N.Q. et al. Proposed Intelligent Decision Support System Using Hedge Algebra Integrated with Picture Fuzzy Relations for Improvement of Decision-Making in Medical Diagnoses. Int. J. Fuzzy Syst. 25, 3260–3270 (2023). <https://doi.org/10.1007/s40815-023-01548-4>
 
 ---
 
@@ -62,7 +71,7 @@ redirect_from:
 
 ## Technical Skills
 
-- **Languages:** Java, Python, Go, C
+- **Languages:** Java, Python, C, JavaScript, Go
 - **Backend:** Spring Framework, Spring Boot, Microservices, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
 - **Infra & Data:** Apache Kafka, Redis, MySQL, MongoDB, Elasticsearch, MinIO, ClickHouse
 - **Platforms & Ops:** Kubernetes, Docker, Jenkins, Grafana, ELK, K6, Linux, Bash, Git
@@ -86,10 +95,3 @@ redirect_from:
   [Credential](https://www.credential.net/8c6a1f21-bbcc-45dc-8d0f-805187541b99)
 
 - **English Test**: TOEIC 955/990, IELTS 7.5 (Issued 2024)
-
----
-
-## Publications
-
-- [Proposed Intelligent Decision Support System using Hedge Algebra integrated with Picture Fuzzy Relations for improvement of decision making in medical diagnoses](https://doi.org/10.1007/s40815-023-01548-4)
-  - Hoang, T.L., Pham, H.V., Hung, N.Q. et al. Proposed Intelligent Decision Support System Using Hedge Algebra Integrated with Picture Fuzzy Relations for Improvement of Decision-Making in Medical Diagnoses. Int. J. Fuzzy Syst. 25, 3260–3270 (2023). <https://doi.org/10.1007/s40815-023-01548-4>
