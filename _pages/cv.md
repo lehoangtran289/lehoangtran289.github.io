@@ -19,11 +19,11 @@ redirect_from:
 
 ## Education
 
-- [**George Mason University**](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
+- [**George Mason University (GMU)**](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
   - M.S. in Computer Science
   - Current GPA: **3.86**/4.0
 
-- [**Hanoi University of Science and Technology**](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
+- [**Hanoi University of Science and Technology (HUST)**](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
   - B.S. in Information Technology, Global ICT Program
   - GPA: **3.62**/4.0 \| Excellence Degree (Top 5% of cohort)
   - Excellence Scholarship Academic Award in 2021
@@ -46,7 +46,7 @@ redirect_from:
 - Implemented an **online data migration solution** for **10TB+** of data from LINE and Yahoo systems to a unified MySQL database using dual-write and backfill strategy.
 - Leveraged AI-assisted development tools and prompt engineering for source code onboarding, automated unit & integration tests, and early-stage code review, increasing development velocity.
 
-### **[Viettel Digital](https://viettel.com.vn/en/) - Backend Software Engineer**
+### **[Viettel Digital](https://viettel.com.vn/en/) - Senior Backend Software Engineer**
 
 *Hanoi, Vietnam \| May 2021 – Jun 2025*  
 
