@@ -43,29 +43,29 @@ redirect_from:
 
 *Hanoi, Vietnam \| Jun 2025 – Aug 2025*
 
-- Implemented an **online data migration solution** for **10TB+** of data from LINE and Yahoo systems to a unified MySQL database using dual-write and backfill strategy.
-- Leveraged AI-assisted development tools and prompt engineering for source code onboarding, automated unit & integration tests, and early-stage code review, increasing development velocity.
+- Implemented an **online data migration solution** for **10TB+** of data from LINE and Yahoo systems to a unified MySQL database using a dual-write and backfill strategy.
+- Applied AI-assisted development tools and prompt engineering for source code onboarding, automated unit & integration tests, and early-stage code review, **increasing development velocity by 30%**.
 
-### **[Viettel Digital](https://viettel.com.vn/en/) - Senior Backend Software Engineer**
+### **[Viettel Digital Finance](https://viettel.com.vn/en/) - Backend Software Engineer**
 
 *Hanoi, Vietnam \| May 2021 – Jun 2025*  
 
 - **Customer Engagement Platform** \| *2023 - 2025*
-  - Architected an **in-house marketing platform** to deliver personalized campaigns through push notifications, in-app messaging, and rewards distribution, processing **100M+** events daily.
+  - Architected and built an **in-house marketing platform** delivering personalized campaigns to **20M+ users** through push notifications, in-app messaging, and rewards distribution, processing **100M+** events daily.
   - Increased user segmentation creation throughput from **500 to 35,000 QPS** while **reducing p95 latency by 80%** by introducing a **Roaring Bitmap-based solution** and multi-layer caching.
-  - Engineered a Camunda-based workflow orchestration module, enabling operations teams to configure and manage **200+** single- and multi-step marketing workflows per month.
-  - **Led a team of 4 backend engineers** through Agile sprint planning, system design, and peer code reviews, guiding technical decisions to keep the system maintainable through rapid feature growth.
-  - Owned end-to-end system observability using Grafana, identifying performance bottlenecks and improving reliability through configuration tuning, caching strategies, and microservice patterns.
+  - Engineered a Camunda (BPMN) workflow orchestration module, enabling non-engineering operations teams to configure and run **200+** multi-step marketing workflows per month.
+  - **Led a team of 4 backend engineers** through Agile sprint planning, system design, and peer code reviews, guiding technical decisions as feature scope and user demand grew.
+  - Owned end-to-end observability for **20+ microservices** in Grafana, identifying performance bottlenecks and improving reliability through configuration tuning, caching strategies, and microservice patterns.
 
 - **Data Tracking System** \| *2022 - 2023*
-  - Designed and delivered a high-throughput **in-house event tracking system** for mobile and web platforms, processing **150M+** events daily and replacing a third-party tracking provider to **reduce licensing costs**.
-  - Reduced event validation latency by 30% by replacing linear rule processing with a decision-tree validation engine, supporting **3,000+ dynamic rules** configurable online.
-  - Built non-blocking ingestion APIs using Spring WebFlux, sustaining **1,700+ RPS** on average while reducing request-per-thread overhead.
+  - Designed and delivered a high-throughput **in-house event tracking system** for mobile and web platforms, processing **150M+** user events daily and replacing a third-party tracking provider to **reduce licensing costs**.
+  - Reduced event validation latency by **30%** by replacing linear rule matching with a decision-tree validation engine, supporting **3,000+ dynamic rules** configurable online.
+  - Built non-blocking ingestion REST APIs with Spring WebFlux, sustaining **1,700+ RPS** on average while reducing thread-per-request overhead.
 
 - **Smart Authentication System** \| *2021 - 2022*
-  - Collaborated on the research and delivery of a **Smart OTP** solution for **20M+ end users**, eliminating reliance on SMS OTPs and **saving over $200K/year**.
+  - Collaborated on the research and delivery of an **app-based OTP authentication** solution for **20M+ end users**, eliminating reliance on SMS OTPs and **saving over $200K annually**.
   - Implemented secure key exchange, OTP generation, and digital signature mechanisms across critical APIs, meeting internal cryptographic and security-review requirements.
-  - Hardened Android client application using native **C/JNI**, applying obfuscation and root/jailbreak/tamper detection, successfully passing enterprise-level security audits.
+  - Hardened the Android client application with native **C/JNI** obfuscation and root/jailbreak/tamper detection, passing enterprise-level security audits.
 
 ---
 
@@ -74,9 +74,9 @@ redirect_from:
 - **Languages:** Java, Python, C, JavaScript, Go
 - **Backend:** Spring Framework, Spring Boot, Microservices, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
 - **Infra & Data:** Apache Kafka, Redis, MySQL, MongoDB, Elasticsearch, MinIO, ClickHouse
-- **Platforms & Ops:** Kubernetes, Docker, Jenkins, Grafana, ELK, K6, Linux, Bash, Git
-- **AI Tooling:** Claude, OpenAI Codex, Agentic Workflows, Prompt Engineering
-- **Familiar with:** Agile SDLC, Distributed Systems, Design Patterns, Cybersecurity
+- **Platforms & Ops:** Kubernetes, Docker, Jenkins, Grafana, ELK, K6, Linux, Bash, Git/GitHub
+- **AI Tooling:** Claude, OpenAI Codex, Agentic Workflows, Prompt Engineering, LLMs, RAG workflows
+- **Familiar with:** Agile SDLC, CI/CD, Distributed Systems, Design Patterns, Cybersecurity
 
 ---
 
