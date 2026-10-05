@@ -16,7 +16,6 @@ body {
   padding: $masthead-height 0 0;
   padding-bottom: 9em;
   font-family: $global-font-family;
-  font-weight: 300;
   line-height: 1.5;
 
   &.overflow--hidden {
@@ -29,15 +28,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 2em 0 0.5em;
   line-height: 1.2;
   font-family: $header-font-family;
-  font-weight: 400;
-}
-
-h1, h2 {
-  font-weight: 300;
-}
-
-b, strong {
-  font-weight: 700;
+  font-weight: bold;
 }
 
 h1 {
