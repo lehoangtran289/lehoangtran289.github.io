@@ -12,6 +12,9 @@
     {% if site.author.github %}
       <li><a href="https://github.com/{{ site.author.github }}"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
     {% endif %}
+    {% if site.author.leetcode %}
+      <li><a href="https://leetcode.com/u/{{ site.author.leetcode }}"><i class="fas fa-code" aria-hidden="true"></i> LeetCode</a></li>
+    {% endif %}
     {% if site.author.bitbucket %}
       <li><a href="https://bitbucket.org/{{ site.author.bitbucket }}"><i class="fab fa-bitbucket" aria-hidden="true"></i> Bitbucket</a></li>
     {% endif %}
