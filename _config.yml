@@ -9,10 +9,10 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Le Hoang Tran"
+title                    : "Le-Hoang Tran"
 title_separator          : "-"
-name                     : &name "Le Hoang Tran / Portfolio"
-description              : &description "Le Hoang Tran's professional portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
+name                     : &name "Le-Hoang Tran / Portfolio"
+description              : &description "Le-Hoang Tran's professional portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
 url                      : "https://hoangtl.space" # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -24,7 +24,7 @@ repository               : "lehoangtran289/lehoangtran289.github.io"
 author:
   # Biographic information
   avatar           : "profile_img.png"
-  name             : "Le Hoang Tran"
+  name             : "Le-Hoang Tran"
   pronouns         : # example: "she/her"  
   bio              : "Backend Software Engineer | M.S. in Computer Science @ GMU'26 | Java • MySQL • Kafka • Redis"
   location         : "Arlington, VA, USA"
