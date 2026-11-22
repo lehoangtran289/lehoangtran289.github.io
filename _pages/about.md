@@ -13,11 +13,11 @@ redirect_from:
 
 Hi there!
 
-I’m Hoang, a backend software engineer who is currently pursuing **M.S. in Computer Science** at [George Mason University](https://cec.gmu.edu/). Before graduate school, I earned my Bachelor’s degree from the [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/) and then spent **4.5 years** working as a backend software engineer, delivering large-scale software systems that serve millions of users.
+I'm Hoang, a backend software engineer with approx **5 years of experience** building scalable systems serving millions of users. I hold a **Master's degree** in Computer Science from [George Mason University](https://cec.gmu.edu/) and a **Bachelor's degree** from [Hanoi University of Science and Technology](https://soict.hust.edu.vn/en/).
 
-My interests include **distributed systems, scalable software design, and AI/data-driven applications**. Along this journey, I also try to document and elaborate on the concepts/techniques I learn, sometimes to share with others, and often so my future self can revisit the knowledge when needed.
+My interests include **low-level stuffs, distributed systems, scalable software design, and AI/data-driven applications**. Along this journey, I also enjoy documenting what I learn, both to share knowledge and to revisit it later.
 
-Beyond work, you can find me in the gym, or out in nature wandering under the sunshine. Anyway, feel free to reach out or drop a message through my social links or email. I'm always open to connecting and discussing.
+Beyond work, you may find me exploring the outdoors or at the gym. Anyway, feel free to reach out and drop a message. I'm always happy to connect!
 
 ## Journey
 

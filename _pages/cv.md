@@ -21,11 +21,11 @@ redirect_from:
 
 - [**George Mason University (GMU)**](https://cec.gmu.edu/) \| Fairfax, VA, USA \| Aug 2025 - Dec 2026
   - M.S. in Computer Science
-  - Current GPA: **3.86**/4.0
+  - Current GPA: **3.9/4.0**
 
 - [**Hanoi University of Science and Technology (HUST)**](https://soict.hust.edu.vn/en/) \| Hanoi, Vietnam \| Aug 2017 - Jun 2022
   - B.S. in Information Technology, Global ICT Program
-  - GPA: **3.62**/4.0 \| Excellence Degree (Top 5% of cohort)
+  - GPA: **3.62/4.0** \| Excellence Degree (Top 5% of cohort)
   - Excellence Scholarship Academic Award in 2021
 
 ---
@@ -43,7 +43,7 @@ redirect_from:
 
 *Hanoi, Vietnam \| Jun 2025 – Aug 2025*
 
-- Implemented an **online data migration solution** for **10TB+** of data from LINE and Yahoo systems to a unified MySQL database using a dual-write and backfill strategy.
+- Implemented an **online data migration solution** for data from LINE and Yahoo systems to a unified MySQL database using a dual-write and backfill strategy.
 - Applied AI-assisted development tools and prompt engineering for source code onboarding, automated unit & integration tests, and early-stage code review, **increasing development velocity by 30%**.
 
 ### **[Viettel Digital Finance](https://viettel.com.vn/en/) - Backend Software Engineer**
@@ -69,14 +69,15 @@ redirect_from:
 
 ---
 
-## Technical Skills
+## Skills
 
-- **Languages:** Java, Python, C, JavaScript, Go
+- **Programming Languages:** Java, Python, C, JavaScript/TypeScript, Go
 - **Backend:** Spring Framework, Spring Boot, Microservices, Camunda, REST, gRPC, JUnit, Mockito, Testcontainers
 - **Infra & Data:** Apache Kafka, Redis, MySQL, MongoDB, Elasticsearch, MinIO, ClickHouse
 - **Platforms & Ops:** Kubernetes, Docker, Jenkins, Grafana, ELK, K6, Linux, Bash, Git/GitHub
 - **AI Tooling:** Claude, OpenAI Codex, Agentic Workflows, Prompt Engineering, LLMs, RAG workflows
 - **Familiar with:** Agile SDLC, CI/CD, Distributed Systems, Design Patterns, Cybersecurity
+- **Languages**: Vietnamese (Native), English (Fluent, TOEIC 955/990, IELTS 7.5)
 
 ---
 
@@ -93,5 +94,3 @@ redirect_from:
 
 - **Redis Certified Developer** - *Issued Dec 2021*  
   [Credential](https://www.credential.net/8c6a1f21-bbcc-45dc-8d0f-805187541b99)
-
-- **English Test**: TOEIC 955/990, IELTS 7.5 (Issued 2024)
